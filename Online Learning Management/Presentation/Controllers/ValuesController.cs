@@ -5,7 +5,7 @@ using Online_Learning_Management.Domain.Interfaces;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
