@@ -364,3 +364,7 @@ FodyWeavers.xsd
 
 # Enviroment variables file
 .env
+
+#App settings
+Online Learning Management/appsettings.json
+Online Learning Management/appsettings.Development.json
