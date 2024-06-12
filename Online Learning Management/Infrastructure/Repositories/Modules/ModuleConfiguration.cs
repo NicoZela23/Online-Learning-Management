@@ -10,8 +10,14 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Modules
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.CourseID).IsRequired();
-            builder.Property(x => x.Name).IsRequired();
-            builder.Property(x=>x.Description).IsRequired();
+            builder.Property(x => x.Name)
+               .IsRequired()
+               .HasColumnType("nvarchar(100)"); 
+
+            builder.Property(x => x.Description)
+                .IsRequired()
+                .HasColumnType("nvarchar(max)");
         }
     }
+    
 }
