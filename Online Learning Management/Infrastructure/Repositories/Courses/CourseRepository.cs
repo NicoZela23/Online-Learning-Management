@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Online_Learning_Management.Infrastructure.Data;
 
-namespace Online_Learning_Management.Infrastructure.Repositories
+namespace Online_Learning_Management.Infrastructure.Repositories.Courses
 {
     public class CourseRepository : ICourseRepository
     {
@@ -18,16 +18,16 @@ namespace Online_Learning_Management.Infrastructure.Repositories
 
         public async Task<Course> CreateCourseAsync(Course course)
         {
+            course.Id = Guid.NewGuid();
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
             return course;
         }
 
-        public async Task<Course> GetCourseByIdAsync(int courseId)
-        {
-            return await _context.Courses.FindAsync(courseId);
-        }
 
-      
+        public async Task<Course> GetCourseByIdAsync(Guid Id)
+        {
+            return await _context.Courses.FindAsync(Id);
+        }
     }
 }

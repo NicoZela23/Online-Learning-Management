@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Online_Learning_Management.Domain.Interfaces;
 using Online_Learning_Management.Infrastructure.Data;
 using Online_Learning_Management.Infrastructure.Repositories;
+using Online_Learning_Management.Infrastructure.Repositories.Courses;
 
 var builder = WebApplication.CreateBuilder(args);
 
