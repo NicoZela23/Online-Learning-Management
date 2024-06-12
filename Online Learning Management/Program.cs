@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //Register dependency injection
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
 
 
