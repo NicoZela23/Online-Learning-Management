@@ -9,5 +9,6 @@ namespace Online_Learning_Management.Infrastructure.Data
         {
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Module> Modules{ get; set; }
     }
 }
