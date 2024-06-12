@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Online_Learning_Management.Domain.Entities;
+using Online_Learning_Management.Domain.Entities.Module;
 using Online_Learning_Management.Domain.Interfaces;
 using Online_Learning_Management.Infrastructure.Data;
 
-namespace Online_Learning_Management.Infrastructure.Repositories
+namespace Online_Learning_Management.Infrastructure.Repositories.Modules
 {
     public class ModuleRepository : IModuleRepository
     {

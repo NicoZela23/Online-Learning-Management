@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Online_Learning_Management.Domain.Entities;
+using Online_Learning_Management.Domain.Entities.Module;
+using Online_Learning_Management.Infrastructure.Repositories.Modules;
 
 namespace Online_Learning_Management.Infrastructure.Data
 {
@@ -10,5 +12,12 @@ namespace Online_Learning_Management.Infrastructure.Data
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Module> Modules{ get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new ModuleConfiguration());
+        }
     }
 }

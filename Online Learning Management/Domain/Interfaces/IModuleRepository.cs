@@ -1,4 +1,4 @@
-﻿using Online_Learning_Management.Domain.Entities;
+﻿using Online_Learning_Management.Domain.Entities.Module;
 
 namespace Online_Learning_Management.Domain.Interfaces
 {
