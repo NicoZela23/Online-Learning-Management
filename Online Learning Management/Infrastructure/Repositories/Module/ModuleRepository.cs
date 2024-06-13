@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Online_Learning_Management.Domain.Entities.Module;
-using Online_Learning_Management.Domain.Interfaces;
+using Online_Learning_Management.Domain.Entities.Modules;
+using Online_Learning_Management.Domain.Interfaces.Modules;
 using Online_Learning_Management.Infrastructure.Data;
 
 namespace Online_Learning_Management.Infrastructure.Repositories.Modules
@@ -17,11 +17,6 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Modules
         public async Task<Module> GetModuleByIdAsync(Guid id)
         {
             return await _context.Modules.FindAsync(id);
-        }
-
-        public async Task<Module> GetModuleByNameAsync(string name)
-        {
-            return await _context.Modules.FindAsync(name);
         }
 
         public async Task<IEnumerable<Module>> GetAllModulesAsync()
