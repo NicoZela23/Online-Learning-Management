@@ -1,7 +1,7 @@
 using Online_Learning_Management.Domain.Entities;
 
-public interface ICourseRepository
+public interface IStudentsRepository
 {
-    Task<Students> CreateStdentsAsync(Students student);
-    Task<Students> GetStudentsByIdAsync(int Id);
+    Task<Students> GetStudentByIdAsync(int id);
+    Task DeleteStudentByIdAsync(int id);
 }

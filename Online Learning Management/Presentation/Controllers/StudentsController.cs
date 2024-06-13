@@ -1,50 +1,63 @@
 using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Entities;
-using System.Linq;
+using System;
+using System.Threading.Tasks;
 
 namespace Online_Learning_Management.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : ControllerBase
-     {
-       private readonly AppDbContext _context;
+    {
+        private readonly IStudentsRepository _studentRepository;
 
-        public StudentsController(AppDbContext context)
+        public StudentsController(IStudentsRepository studentRepository)
         {
-            _context = context;
+            _studentRepository = studentRepository;
+        }
+
+        // GET: api/Students/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Students>> GetStudent(int id)
+        {
+            try
+            {
+                var student = await _studentRepository.GetStudentByIdAsync(id);
+
+                if (student == null)
+                {
+                    return NotFound(new { message = $"Student with ID {id} not found." });
+                }
+
+                return Ok(student);
+            }
+            catch (Exception ex)
+            {
+               
+                return StatusCode(500, new { message = "An error occurred while retrieving the student.", details = ex.Message });
+            }
         }
 
         
-        [HttpGet("{id}")]
-        public ActionResult<User> GetStudent(int id)
-        {
-           var student = _context.Users.Find(id);
-
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            return student;
-        }
-
-        // DELETE: api/Students/5
         [HttpDelete("{id}")]
-        public ActionResult<User> DeleteStudent(int id)
+        public async Task<ActionResult> DeleteStudent(int id)
         {
-            var student = _context.Users.Find(id);
-            if (student == null)
+            try
             {
-                return NotFound();
+                var student = await _studentRepository.GetStudentByIdAsync(id);
+                if (student == null)
+                {
+                    return NotFound(new { message = $"Student with ID {id} not found." });
+                }
+
+                await _studentRepository.DeleteStudentByIdAsync(id);
+                return NoContent();
             }
-
-            _context.Users.Remove(student);
-            _context.SaveChanges();
-
-            return student;
+            catch (Exception ex)
+            {
+               
+                return StatusCode(500, new { message = "An error occurred while deleting the student.", details = ex.Message });
+            }
         }
     }
-
-   
 }
