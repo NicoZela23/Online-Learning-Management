@@ -49,19 +49,10 @@ namespace Online_Learning_Management.Application.Modules.Services
             return _mapper.Map<Module>(selectedModule);
         }
 
-        public async Task UpdateModuleAsync(Guid id, UpdateModuleDTO moduleDto, JObject rawBody)
+        public async Task UpdateModuleAsync(Guid id, UpdateModuleDTO moduleDto)
         {
-            // Validate if rawBody contains only the properties defined in UpdateModuleDTO
-            var allowedProperties = typeof(UpdateModuleDTO).GetProperties().Select(p => p.Name).ToList();
-            var rawProperties = rawBody.Properties().Select(p => p.Name).ToList();
-
-            var extraProperties = rawProperties.Except(allowedProperties).ToList();
-            if (extraProperties.Any())
-            {
-                throw new ArgumentException("Invalid properties in request body: " + string.Join(", ", extraProperties));
-            }
-
             var existingModule = await _moduleRepository.GetModuleByIdAsync(id);
+
             if (existingModule == null)
             {
                 throw new ArgumentException("Module not found.");
