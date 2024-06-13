@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Entities;
+using Online_Learning_Management.Domain.Interfaces;
 using System;
 using System.Threading.Tasks;
 
@@ -33,12 +34,11 @@ namespace Online_Learning_Management.Controllers
             }
             catch (Exception ex)
             {
-               
                 return StatusCode(500, new { message = "An error occurred while retrieving the student.", details = ex.Message });
             }
         }
 
-        
+        // DELETE: api/Students/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteStudent(int id)
         {
@@ -51,11 +51,10 @@ namespace Online_Learning_Management.Controllers
                 }
 
                 await _studentRepository.DeleteStudentByIdAsync(id);
-                return NoContent();
+                return NoContent(); // return a 204 status code
             }
             catch (Exception ex)
             {
-               
                 return StatusCode(500, new { message = "An error occurred while deleting the student.", details = ex.Message });
             }
         }

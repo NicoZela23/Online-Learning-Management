@@ -16,6 +16,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 //Register dependency injection
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddScoped<IStudentsRepository, StudentRepository>();
+
 
 
 var app = builder.Build();

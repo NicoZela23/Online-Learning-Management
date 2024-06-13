@@ -1,7 +1,12 @@
 using Online_Learning_Management.Domain.Entities;
+using System.Threading.Tasks;
 
-public interface IStudentsRepository
+namespace Online_Learning_Management.Domain.Interfaces
 {
-    Task<Students> GetStudentByIdAsync(int id);
-    Task DeleteStudentByIdAsync(int id);
+    public interface IStudentsRepository
+    
+    {
+        Task<Students> GetStudentByIdAsync(int id);
+        Task DeleteStudentByIdAsync(int id);
+    }
 }
