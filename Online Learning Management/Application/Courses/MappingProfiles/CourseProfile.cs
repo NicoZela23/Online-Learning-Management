@@ -6,5 +6,6 @@ public class CourseProfile : Profile
     public CourseProfile()
     {
         CreateMap<CreateCourseDTO, Course>();
+        CreateMap<UpdateCourseDTO, Course>();
     }
 }

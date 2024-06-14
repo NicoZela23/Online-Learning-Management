@@ -29,5 +29,24 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Courses
         {
             return await _context.Courses.FindAsync(Id);
         }
+
+        public async Task<IEnumerable<Course>> GetCoursesByIdInstructorAsync(int IdInstructor)
+        {
+            return await _context.Courses
+                                 .Where(course => course.IdInstructor == IdInstructor)
+                                 .ToListAsync();
+        }
+
+        public async Task<bool> InstructorExistsAsync(int idInstructor)
+        {
+            return await _context.Courses.AnyAsync(Course => Course.IdInstructor == idInstructor);
+        }
+
+        public async Task<Course> UpdateCourseAsync(Course course)
+        {
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync(); 
+            return course;
+        }
     }
 }

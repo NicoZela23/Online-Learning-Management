@@ -47,6 +47,39 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
+        [HttpGet("/instructors/{IdInstructor}/courses")]
+        public async Task<IActionResult> GetCoursesByIdInstructor(int IdInstructor)
+        {
+            try
+            {
+                var courses = await _courseService.GetCoursesByIdInstructorAsync(IdInstructor);
+                return Ok(courses);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+        }
+
+        [HttpPut("{courseId}")]
+        public async Task<IActionResult> UpdateCourse(Guid courseId, UpdateCourseDTO courseDto)
+        {
+            try
+            {
+                var updatedCourse = await _courseService.UpdateCourseAsync(courseId, courseDto);
+                return Ok(updatedCourse);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
 
     }
