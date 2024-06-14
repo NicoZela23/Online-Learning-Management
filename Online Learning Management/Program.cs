@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Online_Learning_Management.Domain.Interfaces;
 using Online_Learning_Management.Infrastructure.Data;
 using Online_Learning_Management.Infrastructure.Repositories;
+using Online_Learning_Management.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,8 @@ builder.Services.AddSwaggerGen();
 //Anable DB Conection
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //Register dependency injection
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddProjectServices();
+//builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 

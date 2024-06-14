@@ -6,8 +6,8 @@ namespace Online_Learning_Management.Domain.Interfaces.ModuleTasks
     public interface IModuleTaskService
     {
         Task<IEnumerable<ModuleTask>> GetAllTasksOfModuleAsync();
-        Task<ModuleTask> GetTaskOfModuloByIdAsync(Guid id);
-        Task AddTaskToModuloAsync(CreateModuleTaskDTO moduleTask);
+        Task<ModuleTask> GetTaskOfModuleByIdAsync(Guid id);
+        Task AddTaskToModuleAsync(CreateModuleTaskDTO moduleTask);
         Task UpdateTaskOfModuleAsync(Guid id, UpdateModuleTaskDTO moduleTask);
         Task DeleteTaskOfModuleAsync(Guid id);
     }
