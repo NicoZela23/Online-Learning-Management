@@ -42,6 +42,8 @@ namespace Online_Learning_Management.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+                    
+                    b.ToTable("Modules");
                 });
                 
             modelBuilder.Entity("Online_Learning_Management.Domain.Entities.ModuleTasks.ModuleTask", b =>
