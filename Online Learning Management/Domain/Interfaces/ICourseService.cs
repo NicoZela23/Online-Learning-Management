@@ -6,4 +6,5 @@ public interface ICourseService
     Task<Course> GetCourseByIdAsync(Guid Id);
     Task<IEnumerable<Course>> GetCoursesByIdInstructorAsync(int IdInstructor);
     Task<Course> UpdateCourseAsync(Guid courseId, UpdateCourseDTO courseDto);
+    Task DeleteCourseAsync(Guid courseId);
 }

@@ -45,8 +45,18 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Courses
         public async Task<Course> UpdateCourseAsync(Course course)
         {
             _context.Courses.Update(course);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
             return course;
+        }
+
+        public async Task DeleteCourseAsync(Guid courseId)
+        {
+            var course = await _context.Courses.FindAsync(courseId);
+            if (course != null)
+            {
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

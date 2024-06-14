@@ -55,5 +55,15 @@ public class CourseService : ICourseService
         return _mapper.Map<Course>(course);
     }
 
+    public async Task DeleteCourseAsync(Guid courseId)
+    {
+        var course = await _courseRepository.GetCourseByIdAsync(courseId);
+        if (course == null)
+        {
+            throw new KeyNotFoundException("Course not found");
+        }
+        await _courseRepository.DeleteCourseAsync(courseId);
+    }
+
 
 }
