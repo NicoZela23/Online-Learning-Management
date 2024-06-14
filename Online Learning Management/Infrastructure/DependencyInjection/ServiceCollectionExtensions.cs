@@ -6,14 +6,19 @@ using Online_Learning_Management.Application.Modules.Services;
 using Online_Learning_Management.Application.ModuleTasks.Services;
 using Online_Learning_Management.Domain.Interfaces.ModuleTasks;
 using Online_Learning_Management.Infrastructure.Repositories.ModuleTasks;
+using Online_Learning_Management.Domain.Interfaces;
+using Online_Learning_Management.Infrastructure.Repositories;
+using Online_Learning_Management.Infrastructure.Repositories.Courses;
 using Online_Learning_Management.Domain.Interfaces.CourseStudents;
 using Online_Learning_Management.Infrastructure.Repositories.CourseStudents;
+
 namespace Online_Learning_Management.Infrastructure.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
         public static void AddProjectServices(this IServiceCollection services)
         {
+          
             //Register repositories
             services.AddScoped<IModuleRepository, ModuleRepository>();
 
@@ -22,14 +27,19 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IModuleService, ModuleServices>();
 
             services.AddScoped<IModuleTaskRepository, ModuleTaskRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
 
             //Register services
             services.AddScoped<IModuleService, ModuleServices>();
             services.AddScoped<IModuleTaskService, ModuleTaskService>();
-            services.AddScoped<ICourseStudentsRepository, CourseStudentsRepository>();
+
+            services.AddScoped<ICourseService, CourseService>();
+ services.AddScoped<ICourseStudentsRepository, CourseStudentsRepository>();
             services.AddScoped<ICourseStudentsService, CourseStudentsService>();
+
             //Register AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
     }
 }
+
