@@ -25,7 +25,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 var course = await _courseService.CreateCourseAsync(courseDto);
-                return Ok(course);
+                return CreatedAtAction(nameof(GetCourseById), new { Id = course.Id }, course);
             }
             catch (Exception ex)
             {
