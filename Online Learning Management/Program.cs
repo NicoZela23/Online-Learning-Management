@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Online_Learning_Management.Domain.Interfaces;
 using Online_Learning_Management.Infrastructure.Data;
+using Online_Learning_Management.Infrastructure.DependencyInjection;
 using Online_Learning_Management.Infrastructure.Repositories;
 using Online_Learning_Management.Infrastructure.Repositories.Courses;
 
@@ -17,7 +18,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 //Register dependency injection
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
+//Add project dependency injection
+builder.Services.AddProjectServices();
 
 
 var app = builder.Build();

@@ -4,7 +4,6 @@ namespace Online_Learning_Management.Domain.Entities
 {
     public class Course
     {
-        [Key]
         public Guid Id { get; set; }
         public required string Title { get; set; }
         public required string Description { get; set; }
