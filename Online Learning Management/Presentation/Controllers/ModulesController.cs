@@ -4,7 +4,7 @@ using Online_Learning_Management.Domain.Interfaces.Modules;
 using Online_Learning_Management.Infrastructure.DTOs.Module;
 
 namespace Online_Learning_Management.Presentation.Controllers
-{
+{ 
     [Route("modules")]
     [ApiController]
     public class ModulesController : ControllerBase
@@ -28,7 +28,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")]// GET /modules/{id}
         public async Task<ActionResult<Module>> GetModuleById(Guid id)
         {
             try

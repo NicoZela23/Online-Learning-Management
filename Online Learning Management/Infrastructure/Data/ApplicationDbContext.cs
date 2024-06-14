@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Online_Learning_Management.Domain.Entities;
+using Online_Learning_Management.Domain.Entities.CourseStudent;
 using Online_Learning_Management.Domain.Entities.Modules;
 using Online_Learning_Management.Infrastructure.Repositories.Modules;
 using Online_Learning_Management.Domain.Entities.ModuleTasks;
@@ -15,8 +16,12 @@ namespace Online_Learning_Management.Infrastructure.Data
         }
 
         public DbSet<Module> Modules{ get; set; }
+
+
         public DbSet<ModuleTask> ModuleTasks { get; set; }
+
         public DbSet<Course> Courses { get; set; }
+public DbSet<CourseStudent> CourseStudents { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
