@@ -1,10 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Online_Learning_Management.Migrations
 {
-    public partial class CourseStudentMigration : Migration
+    /// <inheritdoc />
+    public partial class CourseStudenstMigrations : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -21,10 +25,14 @@ namespace Online_Learning_Management.Migrations
                 });
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+             migrationBuilder.DropTable(
                 name: "CourseStudents");
+
+            // migrationBuilder.DropTable(
+            //     name: "ModuleTasks");
         }
     }
 }
