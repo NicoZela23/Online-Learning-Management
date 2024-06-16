@@ -1,4 +1,4 @@
-using Online_Learning_Management.Domain.Entities;
+using Online_Learning_Management.Domain.Entities.Courses;
 
 public interface ICourseService
 {

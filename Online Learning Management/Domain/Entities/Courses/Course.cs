@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Online_Learning_Management.Domain.Entities
+namespace Online_Learning_Management.Domain.Entities.Courses
 {
     public class Course
     {

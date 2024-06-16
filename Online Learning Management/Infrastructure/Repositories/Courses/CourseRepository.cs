@@ -1,9 +1,9 @@
-using Online_Learning_Management.Domain.Entities;
 using Online_Learning_Management.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Online_Learning_Management.Infrastructure.Data;
+using Online_Learning_Management.Domain.Entities.Courses;
 
 namespace Online_Learning_Management.Infrastructure.Repositories.Courses
 {

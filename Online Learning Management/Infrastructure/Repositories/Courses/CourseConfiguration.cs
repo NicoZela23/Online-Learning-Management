@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Online_Learning_Management.Domain.Entities;
+using Online_Learning_Management.Domain.Entities.Courses;
 
 namespace Online_Learning_Management.Infrastructure.Repositories.Courses
 {
