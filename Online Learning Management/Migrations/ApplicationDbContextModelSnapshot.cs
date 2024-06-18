@@ -21,114 +21,146 @@ namespace Online_Learning_Management.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-            
-            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Course", b =>
-             {
-                 b.Property<Guid>("Id")
-                     .ValueGeneratedOnAdd()
-                     .HasColumnType("uniqueidentifier");
 
-                 b.Property<string>("Description")
-                     .IsRequired()
-                     .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.CourseStudent.CourseStudent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                 b.Property<int>("IdInstructor")
-                     .HasColumnType("int");
+                    b.Property<string>("CourseID")
+                        .HasColumnType("nvarchar(max)");
 
-                 b.Property<string>("Title")
-                     .IsRequired()
-                     .HasColumnType("nvarchar(max)");
+                    b.Property<string>("StudentID")
+                        .HasColumnType("nvarchar(max)");
 
-                 b.HasKey("Id");
+                    b.HasKey("Id");
 
-                 b.ToTable("Courses");
-             });
+                    b.ToTable("CourseStudents");
+                });
 
-         modelBuilder.Entity("Online_Learning_Management.Domain.Entities.CourseStudent.CourseStudent", b =>
-             {
-                 b.Property<Guid>("Id")
-                     .ValueGeneratedOnAdd()
-                     .HasColumnType("uniqueidentifier");
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Courses.Course", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                 b.Property<string>("CourseID")
-                     .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                 b.Property<string>("StudentID")
-                     .HasColumnType("nvarchar(max)");
+                    b.Property<int>("IdInstructor")
+                        .HasColumnType("int");
 
-                 b.HasKey("Id");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                 b.ToTable("CourseStudents");
-             });
+                    b.HasKey("Id");
 
-         modelBuilder.Entity("Online_Learning_Management.Domain.Entities.ModuleTasks.ModuleTask", b =>
-             {
-                 b.Property<Guid>("Id")
-                     .ValueGeneratedOnAdd()
-                     .HasColumnType("uniqueidentifier");
+                    b.ToTable("Courses");
+                });
 
-                 b.Property<string>("Description")
-                     .IsRequired()
-                     .HasColumnType("text");
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Forums.Forum", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                 b.Property<string>("ModuleID")
-                     .IsRequired()
-                     .HasColumnType("nvarchar(max)");
+                    b.Property<string>("CourseID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                 b.Property<string>("Title")
-                     .IsRequired()
-                     .HasColumnType("nvarchar(100)");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                 b.HasKey("Id");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
 
-                 b.ToTable("ModuleTasks");
-             });
+                    b.HasKey("Id");
 
-         modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Modules.Module", b =>
-             {
-                 b.Property<Guid>("Id")
-                     .ValueGeneratedOnAdd()
-                     .HasColumnType("uniqueidentifier");
+                    b.ToTable("Forums");
+                });
 
-                 b.Property<string>("CourseID")
-                     .IsRequired()
-                     .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.ModuleTasks.ModuleTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                 b.Property<string>("Description")
-                     .IsRequired()
-                     .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                 b.Property<string>("Name")
-                     .IsRequired()
-                     .HasColumnType("nvarchar(100)");
+                    b.Property<string>("ModuleID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                 b.HasKey("Id");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
 
-                 b.ToTable("Modules");
-             });
+                    b.HasKey("Id");
 
-           modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Forums.Forum", b =>
-            {
-                b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uniqueidentifier");
+                    b.ToTable("ModuleTasks");
+                });
 
-                b.Property<string>("CourseID")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Modules.Module", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                b.Property<string>("Description")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(max)");
+                    b.Property<string>("AssessmentMethods")
+                        .HasColumnType("nvarchar(max)");
 
-                b.Property<string>("Title")
-                    .IsRequired()
-                    .HasColumnType("nvarchar(100)");
+                    b.Property<Guid?>("CourseID")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
 
-                b.HasKey("Id");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(3000)");
 
-                b.ToTable("Forums");
-            });
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("LearningOutcomes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Prerequisites")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Resources")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseID");
+
+                    b.ToTable("Modules");
+                });
+
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Modules.Module", b =>
+                {
+                    b.HasOne("Online_Learning_Management.Domain.Entities.Courses.Course", null)
+                        .WithMany()
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 #pragma warning restore 612, 618
         }
     }
