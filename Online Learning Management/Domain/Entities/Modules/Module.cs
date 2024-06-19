@@ -1,4 +1,6 @@
-﻿namespace Online_Learning_Management.Domain.Entities.Modules
+﻿using Online_Learning_Management.Domain.Entities.Courses;
+
+namespace Online_Learning_Management.Domain.Entities.Modules
 {
     public class Module
     {
