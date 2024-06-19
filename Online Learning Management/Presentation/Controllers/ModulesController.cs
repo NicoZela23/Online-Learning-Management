@@ -2,10 +2,11 @@
 using Online_Learning_Management.Domain.Entities.Modules;
 using Online_Learning_Management.Domain.Interfaces.Modules;
 using Online_Learning_Management.Infrastructure.DTOs.Module;
+using System.Linq.Expressions;
 
 namespace Online_Learning_Management.Presentation.Controllers
 { 
-    [Route("modules")]
+    [Route("api/modules")]
     [ApiController]
     public class ModulesController : ControllerBase
     {
@@ -28,19 +29,17 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]// GET /modules/{id}
+        [HttpGet("{id}")]
         public async Task<ActionResult<Module>> GetModuleById(Guid id)
         {
             try
             {
                 var module = await _moduleService.GetModuleByIdAsync(id);
-
-                if (module == null)
-                {
-                    return NotFound();
-                }
-
                 return Ok(module);
+            }
+            catch (ArgumentException)
+            {
+                return NotFound("Module not found");
             }
             catch (Exception ex)
             {
@@ -71,7 +70,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
             catch (ArgumentException)
             {
-                return NotFound("Module not found.");
+                    return NotFound("Module not found");
+                
             }
             catch (Exception ex)
             {
@@ -90,10 +90,6 @@ namespace Online_Learning_Management.Presentation.Controllers
             catch (ArgumentException)
             {
                 return NotFound("Module not found.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
             }
         }
     }

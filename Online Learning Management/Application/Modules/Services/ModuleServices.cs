@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using Online_Learning_Management.Application.Modules.Validator;
 using Online_Learning_Management.Domain.Entities.Modules;
 using Online_Learning_Management.Domain.Interfaces.Modules;
 using Online_Learning_Management.Infrastructure.DTOs.Module;
+using System.ComponentModel.DataAnnotations;
 
 namespace Online_Learning_Management.Application.Modules.Services
 {
@@ -19,6 +22,15 @@ namespace Online_Learning_Management.Application.Modules.Services
 
         public async Task AddModuleAsync(CreateModuleDTO createModuleDTO)
         {
+            var validator = new CreateModuleValidator();
+            var validationResult = await validator.ValidateAsync(createModuleDTO);
+            
+            if (!validationResult.IsValid)
+            {
+                var errorMessages = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+                throw new ArgumentException(errorMessages);
+            }
+
             var module = _mapper.Map<Module>(createModuleDTO);
             await _moduleRepository.AddModuleAsync(module);
         }
@@ -28,7 +40,7 @@ namespace Online_Learning_Management.Application.Modules.Services
             var module = await _moduleRepository.GetModuleByIdAsync(id);
             if (module == null)
             {
-                throw new ArgumentException("Module not found.");
+                throw new ArgumentException();
             }
             await _moduleRepository.DeleteModuleAsync(id);
         }
@@ -44,21 +56,30 @@ namespace Online_Learning_Management.Application.Modules.Services
             var selectedModule = await _moduleRepository.GetModuleByIdAsync(id);
             if (selectedModule == null)
             {
-                throw new ArgumentException("Module not found");
+                throw new ArgumentException();
             }
             return _mapper.Map<Module>(selectedModule);
         }
 
-        public async Task UpdateModuleAsync(Guid id, UpdateModuleDTO moduleDto)
+        public async Task UpdateModuleAsync(Guid id, UpdateModuleDTO updateModuleDto)
         {
             var existingModule = await _moduleRepository.GetModuleByIdAsync(id);
+            var validator = new UpdateModuleValidator();
+            var validationResult = await validator.ValidateAsync(updateModuleDto);
+
 
             if (existingModule == null)
             {
-                throw new ArgumentException("Module not found.");
+                throw new ArgumentException();
             }
 
-            _mapper.Map(moduleDto, existingModule);
+            if (!validationResult.IsValid)
+            {
+                var errorMessages = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+                throw new ArgumentException(errorMessages);
+            }
+
+            _mapper.Map(updateModuleDto, existingModule);
 
             await _moduleRepository.UpdateModuleAsync(existingModule);
         }

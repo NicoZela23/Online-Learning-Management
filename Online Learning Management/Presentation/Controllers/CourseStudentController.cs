@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Online_Learning_Management.Presentation.ControllerCourseStudent
+namespace Online_Learning_Management.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -24,7 +24,7 @@ namespace Online_Learning_Management.Presentation.ControllerCourseStudent
             try
             {
                 var courseStudents = await _courseStudentsService.GetAllCourseStudentsAsync();
-                if (courseStudents == null )
+                if (courseStudents == null)
                 {
                     return NotFound(new { message = "No course students found" });
                 }

@@ -6,26 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Online_Learning_Management.Migrations
 {
     /// <inheritdoc />
-    public partial class ForumConfiguration : Migration
+    public partial class GradeStudentConfiguration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.CreateTable(
-                name: "Forums",
+                name: "Grades",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CourseID = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    Score = table.Column<string>(type: "nvarchar(max)", precision: 5, scale: 2, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Forums", x => x.Id);
+                    table.PrimaryKey("PK_Grades", x => x.Id);
+                    table.CheckConstraint("CK_Grade_Score", "[Score] >= 0 AND [Score] <= 100");
                 });
         }
 
@@ -33,7 +33,7 @@ namespace Online_Learning_Management.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Forums");
+                name: "Grades");
 
             migrationBuilder.CreateTable(
                 name: "Users",

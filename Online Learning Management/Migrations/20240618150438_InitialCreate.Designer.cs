@@ -12,8 +12,8 @@ using Online_Learning_Management.Infrastructure.Data;
 namespace Online_Learning_Management.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240614201810_ForumConfiguration")]
-    partial class ForumConfiguration
+    [Migration("20240618150438_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,24 @@ namespace Online_Learning_Management.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Course", b =>
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.CourseStudent.CourseStudent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CourseID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CourseStudents");
+                });
+
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Courses.Course", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,21 +116,53 @@ namespace Online_Learning_Management.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CourseID")
-                        .IsRequired()
+                    b.Property<string>("AssessmentMethods")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CourseID")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("LearningOutcomes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Prerequisites")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Resources")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseID");
+
                     b.ToTable("Modules");
+                });
+
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Modules.Module", b =>
+                {
+                    b.HasOne("Online_Learning_Management.Domain.Entities.Courses.Course", null)
+                        .WithMany()
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
