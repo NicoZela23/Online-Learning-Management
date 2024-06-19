@@ -1,26 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Online_Learning_Management.Domain.Entities.Modules;
+using Online_Learning_Management.Application.Modules.Services;
+using Online_Learning_Management.Domain.Entities.Forums;
+using Online_Learning_Management.Domain.Interfaces.Forums;
 using Online_Learning_Management.Domain.Interfaces.Modules;
-using Online_Learning_Management.Infrastructure.DTOs.Module;
+using Online_Learning_Management.Infrastructure.DTOs.Forum;
+
 
 namespace Online_Learning_Management.Presentation.Controllers
-{ 
-    [Route("modules")]
+{
+    [Route("course/forums")]
     [ApiController]
-    public class ModulesController : ControllerBase
+    public class ForumsController : ControllerBase
     {
-        private readonly IModuleService _moduleService;
-        public ModulesController(IModuleService moduleService)
+
+        private readonly IForumService _forumService;
+        public ForumsController(IForumService forumService)
         {
-            _moduleService = moduleService;
+            _forumService = forumService;
         }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Module>>> GetAllModules()
+        public async Task<ActionResult<IEnumerable<Forum>>> GetAllForums()
         {
             try
             {
-                var modules = await _moduleService.GetAllModulesAsync();
-                return Ok(modules);
+                var forums = await _forumService.GetAllForumsAsync();
+                return Ok(forums);
             }
             catch (Exception ex)
             {
@@ -28,31 +33,33 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]// GET /modules/{id}
-        public async Task<ActionResult<Module>> GetModuleById(Guid id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Forum>> GetForumById(Guid id)
         {
             try
             {
-                var module = await _moduleService.GetModuleByIdAsync(id);
+                var forum = await _forumService.GetForumByIdAsync(id);
 
-                if (module == null)
+                if (forum == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(module);
+                return Ok(forum);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+        
         [HttpPost]
-        public async Task<ActionResult> AddModule(CreateModuleDTO moduleDto)
+        public async Task<ActionResult> AddForum(CreateForumDTO forumDto)
         {
             try
             {
-                await _moduleService.AddModuleAsync(moduleDto);
+                await _forumService.AddForumAsync(forumDto);
                 return StatusCode(201);
             }
             catch (Exception ex)
@@ -61,17 +68,18 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
+        
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateModule(Guid id, [FromBody] UpdateModuleDTO moduleDto)
+        public async Task<ActionResult> UpdateForum(Guid id, [FromBody] UpdateForumDTO forumDto)
         {
             try
             {
-                await _moduleService.UpdateModuleAsync(id, moduleDto);
+                await _forumService.UpdateForumAsync(id, forumDto);
                 return Ok();
             }
             catch (ArgumentException)
             {
-                return NotFound("Module not found.");
+                return NotFound("Forum not found.");
             }
             catch (Exception ex)
             {
@@ -79,17 +87,18 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
+        
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteModule(Guid id)
+        public async Task<ActionResult> DeleteForum(Guid id)
         {
             try
             {
-                await _moduleService.DeleteModuleAsync(id);
+                await _forumService.DeleteForumAsync(id);
                 return NoContent();
             }
             catch (ArgumentException)
             {
-                return NotFound("Module not found.");
+                return NotFound("Forum not found.");
             }
             catch (Exception ex)
             {
