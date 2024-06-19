@@ -1,5 +1,5 @@
 using AutoMapper;
-using Online_Learning_Management.Domain.Entities;
+using Online_Learning_Management.Domain.Entities.Courses;
 
 public class CourseProfile : Profile
 {

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Online_Learning_Management.Presentation.Controllers
 {
     [ApiController]
-    [Route("courses")]
+    [Route("api/courses")]
     public class CoursesController : ControllerBase
     {
 
