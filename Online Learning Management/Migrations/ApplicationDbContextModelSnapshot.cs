@@ -27,7 +27,7 @@ namespace Online_Learning_Management.Migrations
                  b.Property<Guid>("Id")
                      .ValueGeneratedOnAdd()
                      .HasColumnType("uniqueidentifier");
-
+                     
                  b.Property<string>("Description")
                      .IsRequired()
                      .HasColumnType("nvarchar(max)");
@@ -93,11 +93,11 @@ namespace Online_Learning_Management.Migrations
                  b.Property<string>("CourseID")
                      .IsRequired()
                      .HasColumnType("nvarchar(max)");
-
+                     
                  b.Property<string>("Description")
                      .IsRequired()
                      .HasColumnType("nvarchar(max)");
-
+                     
                  b.Property<string>("Name")
                      .IsRequired()
                      .HasColumnType("nvarchar(100)");
@@ -124,11 +124,6 @@ namespace Online_Learning_Management.Migrations
                 b.Property<string>("Title")
                     .IsRequired()
                     .HasColumnType("nvarchar(100)");
-
-                b.HasKey("Id");
-
-                b.ToTable("Forums");
-            });
 #pragma warning restore 612, 618
         }
     }
