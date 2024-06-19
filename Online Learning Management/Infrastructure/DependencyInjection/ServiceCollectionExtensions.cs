@@ -36,6 +36,7 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ICourseStudentsService, CourseStudentsService>();
             services.AddScoped<IForumService, ForumService>();
+            
 
             //Register AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
