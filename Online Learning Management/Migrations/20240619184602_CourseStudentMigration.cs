@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Online_Learning_Management.Migrations
 {
     /// <inheritdoc />
-    public partial class CourseStudenstMigrations : Migration
+    public partial class CourseStudentMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +16,10 @@ namespace Online_Learning_Management.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CourseID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StudentID = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CourseID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StudentID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EnrollmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Progress = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,11 +30,8 @@ namespace Online_Learning_Management.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-             migrationBuilder.DropTable(
+            migrationBuilder.DropTable(
                 name: "CourseStudents");
-
-            // migrationBuilder.DropTable(
-            //     name: "ModuleTasks");
         }
     }
 }
