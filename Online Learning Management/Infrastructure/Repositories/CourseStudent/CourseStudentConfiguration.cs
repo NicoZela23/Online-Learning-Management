@@ -10,7 +10,7 @@ namespace Online_Learning_Management.Infrastructure.Repositories
             builder.HasKey(x => x.Id);
             builder.Property(x => x.CourseID).IsRequired();
             builder.Property(x => x.StudentID).IsRequired();
-            builder.Property(x => x.EnrollmentDate).IsRequired();
+            builder.Property(x => x.EnrollmentDate).IsRequired().HasDefaultValueSql("GETUTCDATE()");
             builder.Property(x => x.Progress).IsRequired();
 
         }
