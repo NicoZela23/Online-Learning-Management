@@ -2,6 +2,7 @@
 using FluentValidation;
 using Online_Learning_Management.Application.Modules.Validator;
 using Online_Learning_Management.Domain.Entities.Modules;
+using Online_Learning_Management.Domain.Exceptions.Module;
 using Online_Learning_Management.Domain.Interfaces.Modules;
 using Online_Learning_Management.Infrastructure.DTOs.Module;
 using System.ComponentModel.DataAnnotations;
@@ -64,19 +65,19 @@ namespace Online_Learning_Management.Application.Modules.Services
         public async Task UpdateModuleAsync(Guid id, UpdateModuleDTO updateModuleDto)
         {
             var existingModule = await _moduleRepository.GetModuleByIdAsync(id);
-            var validator = new UpdateModuleValidator();
-            var validationResult = await validator.ValidateAsync(updateModuleDto);
-
 
             if (existingModule == null)
             {
-                throw new ArgumentException();
+                throw new ModuleNotFoundException();
             }
+
+            var validator = new UpdateModuleValidator();
+            var validationResult = await validator.ValidateAsync(updateModuleDto);
 
             if (!validationResult.IsValid)
             {
                 var errorMessages = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
-                throw new ArgumentException(errorMessages);
+                throw new ModuleValidationException(errorMessages);
             }
 
             _mapper.Map(updateModuleDto, existingModule);

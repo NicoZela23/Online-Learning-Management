@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Entities.Modules;
+using Online_Learning_Management.Domain.Exceptions.Module;
 using Online_Learning_Management.Domain.Interfaces.Modules;
 using Online_Learning_Management.Infrastructure.DTOs.Module;
 using System.Linq.Expressions;
@@ -37,9 +38,9 @@ namespace Online_Learning_Management.Presentation.Controllers
                 var module = await _moduleService.GetModuleByIdAsync(id);
                 return Ok(module);
             }
-            catch (ArgumentException)
+            catch (ModuleNotFoundException ex)
             {
-                return NotFound("Module not found");
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -52,7 +53,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _moduleService.AddModuleAsync(moduleDto);
-                return StatusCode(201);
+                return StatusCode(201, moduleDto);
             }
             catch (Exception ex)
             {
@@ -66,14 +67,13 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _moduleService.UpdateModuleAsync(id, moduleDto);
-                return Ok();
+                return Ok(moduleDto);
             }
-            catch (ArgumentException)
+            catch (ModuleNotFoundException ex)
             {
-                    return NotFound("Module not found");
-                
+                return NotFound(ex.Message);
             }
-            catch (Exception ex)
+            catch (ModuleValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
