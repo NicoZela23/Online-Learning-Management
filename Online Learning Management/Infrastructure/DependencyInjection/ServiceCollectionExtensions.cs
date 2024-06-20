@@ -32,6 +32,7 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<ICourseStudentsRepository, CourseStudentsRepository>();
             services.AddScoped<IForumRepository, ForumRepository>();
             services.AddScoped<IForumRepository, ForumRepository>();
+            services.AddScoped<IGradeStudentRepository, GradeStudentRepository>();
           
             //Register services
             services.AddScoped<IModuleService, ModuleServices>();
@@ -39,8 +40,9 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ICourseStudentsService, CourseStudentsService>();
             services.AddScoped<IForumService, ForumService>();
+
             services.AddScoped<IGradeStudentService, GradeStudentService>();
-          
+
             //Register AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }
