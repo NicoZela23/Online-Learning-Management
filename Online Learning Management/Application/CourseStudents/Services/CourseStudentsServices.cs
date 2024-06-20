@@ -43,4 +43,15 @@ public class CourseStudentsService : ICourseStudentsService
         }
         await _courseStudentsRepository.DeleteCourseStudentAsync(id);
     }
+
+    // new method to add a student to a course
+    public async Task WithdrawCourseStudentAsync(Guid studentId, Guid courseId)
+    {
+        var courseStudent = await _courseStudentsRepository.GetCourseStudentByStudentAndCourseAsync(studentId, courseId);
+        if (courseStudent == null)
+        {
+            throw new KeyNotFoundException("The student is not enrolled in the course");
+        }
+        await _courseStudentsRepository.DeleteCourseStudentAsync(courseStudent.Id);
+    }
 }
