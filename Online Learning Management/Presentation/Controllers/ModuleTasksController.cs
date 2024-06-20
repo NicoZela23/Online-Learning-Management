@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
-    [Route("module/tasks")]
+    [Route("api/modules/tasks")]
     [ApiController]
     public class ModuleTasksController : ControllerBase
     {

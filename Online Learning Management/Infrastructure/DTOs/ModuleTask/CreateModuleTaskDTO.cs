@@ -4,7 +4,6 @@ namespace Online_Learning_Management.Infrastructure.DTOs.ModuleTask
 {
     public class CreateModuleTaskDTO
     {
-        public Guid Id { get; set; }
         public Guid? ModuleID { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }

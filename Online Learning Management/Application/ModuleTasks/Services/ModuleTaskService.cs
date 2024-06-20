@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-
+using Online_Learning_Management.Application.ModuleTasks.Validator;
 using Online_Learning_Management.Domain.Entities.ModuleTasks;
 using Online_Learning_Management.Domain.Interfaces.ModuleTasks;
 using Online_Learning_Management.Infrastructure.DTOs.ModuleTask;
@@ -19,6 +19,15 @@ namespace Online_Learning_Management.Application.ModuleTasks.Services
 
         public async Task AddTaskToModuleAsync(CreateModuleTaskDTO moduleTaskDto)
         {
+            var validator = new CreateModuleTaskValidator();
+            var validate = await validator.ValidateAsync(moduleTaskDto);
+
+            if (!validate.IsValid) 
+            {
+                var errorMessages = string.Join("; ", validate.Errors.Select(e => e.ErrorMessage));
+                throw new ArgumentException(errorMessages);
+            }
+
             var moduleTask = _mapper.Map<ModuleTask>(moduleTaskDto);
             await _moduleTaskRepository.AddTaskToModuleAsync(moduleTask);
         }
