@@ -32,6 +32,7 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<ICourseStudentsRepository, CourseStudentsRepository>();
             services.AddScoped<IForumRepository, ForumRepository>();
             services.AddScoped<IForumRepository, ForumRepository>();
+            services.AddScoped<IGradeStudentRepository, GradeStudentRepository>();
           
             //Register services
             services.AddScoped<IModuleService, ModuleServices>();
