@@ -12,8 +12,8 @@ using Online_Learning_Management.Infrastructure.Data;
 namespace Online_Learning_Management.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240618150438_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240621190625_FileTableAdded")]
+    partial class FileTableAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,11 +31,19 @@ namespace Online_Learning_Management.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CourseID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("CourseID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("StudentID")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("EnrollmentDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<decimal>("Progress")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("StudentID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -64,6 +72,31 @@ namespace Online_Learning_Management.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Files.FileMetadata", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BlobURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<float>("FileSize")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UploadedFiles");
+                });
+
             modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Forums.Forum", b =>
                 {
                     b.Property<Guid>("Id")
@@ -85,6 +118,35 @@ namespace Online_Learning_Management.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Forums");
+                });
+
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.GradeStudents.GradeStudents", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Score")
+                        .IsRequired()
+                        .HasPrecision(5, 2)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Grades", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_Grade_Score", "[Score] >= 0 AND [Score] <= 100");
+                        });
                 });
 
             modelBuilder.Entity("Online_Learning_Management.Domain.Entities.ModuleTasks.ModuleTask", b =>

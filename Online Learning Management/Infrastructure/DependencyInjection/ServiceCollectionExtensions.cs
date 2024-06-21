@@ -17,6 +17,9 @@ using Online_Learning_Management.Infrastructure.Repositories.CourseStudents;
 using Online_Learning_Management.Domain.Interfaces.Forums;
 using Online_Learning_Management.Infrastructure.Repositories.Forum;
 using Online_Learning_Management.Application.Forums.Services;
+using Online_Learning_Management.Domain.Interfaces.Files;
+using Online_Learning_Management.Infrastructure.Repositories.Files;
+using Online_Learning_Management.Application.Files.Services;
 
 namespace Online_Learning_Management.Infrastructure.DependencyInjection
 {
@@ -31,8 +34,8 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<ICourseStudentsRepository, CourseStudentsRepository>();
             services.AddScoped<IForumRepository, ForumRepository>();
-            services.AddScoped<IForumRepository, ForumRepository>();
             services.AddScoped<IGradeStudentRepository, GradeStudentRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
           
             //Register services
             services.AddScoped<IModuleService, ModuleServices>();
@@ -40,8 +43,9 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<ICourseStudentsService, CourseStudentsService>();
             services.AddScoped<IForumService, ForumService>();
-
             services.AddScoped<IGradeStudentService, GradeStudentService>();
+            services.AddScoped<IFileService, AzureBlobService>();
+
 
             //Register AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

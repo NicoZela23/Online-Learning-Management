@@ -11,7 +11,7 @@ namespace Online_Learning_Management.Infrastructure.DTOs.Module
         public List<string>? Prerequisites { get; set; }
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
-        public List<string>? Resources { get; private set; }
+        public List<string>? Resources { get; set; }
         public Dictionary<string, int>? AssessmentMethods { get; set; }
     }
 }
