@@ -8,5 +8,8 @@ namespace Online_Learning_Management.Domain.Interfaces.CourseStudents
         Task<IEnumerable<CourseStudentDTO>> GetAllCourseStudentsAsync();
         Task<CourseStudentDTO> GetCourseStudentByIdAsync(Guid id);
         Task DeleteCourseStudentAsync(Guid id);
+
+        // new method
+    Task WithdrawCourseStudentAsync(Guid studentId, Guid courseId);
     }
 }
