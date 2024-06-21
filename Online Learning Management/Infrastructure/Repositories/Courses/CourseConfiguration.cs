@@ -4,7 +4,7 @@ using Online_Learning_Management.Domain.Entities.Courses;
 
 namespace Online_Learning_Management.Infrastructure.Repositories.Courses
 {
-    public class CourseConfiguration : IEntityTypeConfiguration<Course> 
+    public class CourseConfiguration : IEntityTypeConfiguration<Course>
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
@@ -12,6 +12,8 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Courses
             builder.Property(c => c.Title).IsRequired();
             builder.Property(c => c.Description).IsRequired();
             builder.Property(c => c.IdInstructor).IsRequired();
-        }   
+            builder.Property(c => c.Content).IsRequired();
+            builder.Property(c => c.DurationInWeeks).IsRequired();
+        }
     }
 }
