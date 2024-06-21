@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Interfaces\Files\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
