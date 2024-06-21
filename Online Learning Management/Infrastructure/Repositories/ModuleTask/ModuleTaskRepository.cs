@@ -14,10 +14,11 @@ namespace Online_Learning_Management.Infrastructure.Repositories.ModuleTasks
             _context = context;
         }
 
-        public async Task AddTaskToModuleAsync(ModuleTask moduleTask)
+        public async Task<ModuleTask> AddTaskToModuleAsync(ModuleTask moduleTask)
         {
-            await _context.ModuleTasks.AddAsync(moduleTask);
+            var result = await _context.ModuleTasks.AddAsync(moduleTask);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
 
         public async Task DeleteTaskOfModuleAsync(Guid id)
@@ -30,9 +31,9 @@ namespace Online_Learning_Management.Infrastructure.Repositories.ModuleTasks
             }
         }
 
-        public async Task<IEnumerable<ModuleTask>> GetAllTasksOfModuleAsync()
+        public async Task<IEnumerable<ModuleTask>> GetAllTasksOfModuleAsync(Guid moduleID)
         {
-            return await _context.ModuleTasks.ToListAsync();
+            return await _context.ModuleTasks.Where(t => t.ModuleID == moduleID).ToListAsync();
         }
 
         public async Task<ModuleTask> GetTaskOfModuleByIdAsync(Guid id)
