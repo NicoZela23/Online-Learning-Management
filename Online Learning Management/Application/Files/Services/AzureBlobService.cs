@@ -83,9 +83,13 @@ namespace Online_Learning_Management.Application.Files.Services
 
         public async Task<FileMetadata> UploadAndAddFileAsync(IFormFile file)
         {
-            var blobInfo = await UploadFileAsync(file);
-            var blobName = file.FileName;
-            var blobUrl = new Uri(_containerClient.Uri, blobName).ToString();
+            var blobClient = _containerClient.GetBlobClient(file.FileName);
+            using (var stream = file.OpenReadStream())
+            {
+                await blobClient.UploadAsync(stream, true);
+            }
+
+            var blobUrl = blobClient.Uri.ToString();
             var createFileDTO = _mapper.Map<CreateFileDTO>((file, blobUrl));
             await AddFileDataAsync(createFileDTO);
             var fileMetadata = _mapper.Map<FileMetadata>(createFileDTO);
