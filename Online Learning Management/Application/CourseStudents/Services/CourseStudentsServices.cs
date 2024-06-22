@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using Online_Learning_Management.Application.CourseStudents;
+using Online_Learning_Management.Domain.Entities.CourseStudent;
 using Online_Learning_Management.Domain.Interfaces.CourseStudents;
 using Online_Learning_Management.Infrastructure.DTOs.CourseStudents;
 
@@ -54,4 +55,12 @@ public class CourseStudentsService : ICourseStudentsService
         }
         await _courseStudentsRepository.DeleteCourseStudentAsync(courseStudent.Id);
     }
+
+    public async Task EnrollCourseStudentAsync(EnrollStudentDTO enrollStudentDTO)
+    {
+        var courseStudent = _mapper.Map<CourseStudent>(enrollStudentDTO);
+        await _courseStudentsRepository.AddCourseStudentAsync(courseStudent);
+    }
+
+
 }
