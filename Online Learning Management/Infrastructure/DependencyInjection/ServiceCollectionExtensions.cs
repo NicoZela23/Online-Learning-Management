@@ -20,12 +20,15 @@ using Online_Learning_Management.Application.Forums.Services;
 using Online_Learning_Management.Domain.Interfaces.Files;
 using Online_Learning_Management.Infrastructure.Repositories.Files;
 using Online_Learning_Management.Application.Files.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Online_Learning_Management.Infrastructure.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddProjectServices(this IServiceCollection services)
+        public static void AddProjectServices(this IServiceCollection services, IConfiguration configuration)
         {
           
             //Register repositories
@@ -49,6 +52,21 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
 
             //Register AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            //Register Authentication and authorization
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = configuration["Jwt:Issuer"],
+                        ValidAudience = configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                    };
+                });
         }
     }
 }

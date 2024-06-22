@@ -21,8 +21,6 @@ namespace Online_Learning_Management.Application.Files.MappingProfiles
                 .ForMember(dest => dest.BlobURL, opt => opt.MapFrom(src => src.blobUrl))
                 .ForMember(dest => dest.FileSize, opt => opt.MapFrom(src => src.file.Length / 1024f / 1024f))
                 .ForMember(dest => dest.UploadedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
-
-
         }
     }
 }
