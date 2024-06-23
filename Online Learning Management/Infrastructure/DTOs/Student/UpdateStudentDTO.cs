@@ -6,7 +6,6 @@
         public string LastName { get; set; }
         public string Email { get; set; }
 
-        public DateOnly UpdateAt { get; set; }
 
     }
 }

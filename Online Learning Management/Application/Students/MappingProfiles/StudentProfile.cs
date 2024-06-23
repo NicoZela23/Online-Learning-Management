@@ -14,7 +14,7 @@ namespace Online_Learning_Management.Application.Students.MappingProfiles
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-                .ForMember(dest => dest.CreateAt, opt => opt.MapFrom(src => src.CreateAt))
+                .ForMember(dest => dest.CreateAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdateAt, opt => opt.Ignore());
 
             CreateMap<UpdateStudentDTO, Student>()
@@ -24,7 +24,7 @@ namespace Online_Learning_Management.Application.Students.MappingProfiles
                 .ForMember(dest => dest.LastName, opt => opt.Condition(src => src.LastName != null))
                 .ForMember(dest => dest.Email, opt => opt.Condition(src => src.Email != null))
                 .ForMember(dest => dest.CreateAt, opt => opt.Ignore())
-                .ForMember(dest => dest.UpdateAt, opt => opt.MapFrom(src => src.UpdateAt));
+                .ForMember(dest => dest.UpdateAt, opt => opt.Ignore());
         }
     }
 }

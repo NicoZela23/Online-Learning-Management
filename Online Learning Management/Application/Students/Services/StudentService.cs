@@ -31,6 +31,7 @@ namespace Online_Learning_Management.Application.Students.Services
         public async Task AddStudentAsync(CreateStudentDTO createStudentDTO)
         {
             var student = _mapper.Map<Student>(createStudentDTO);
+            student.CreateAt = DateOnly.FromDateTime(DateTime.Now);
             await _studentRepository.AddStudentAsync(student);
         }
 

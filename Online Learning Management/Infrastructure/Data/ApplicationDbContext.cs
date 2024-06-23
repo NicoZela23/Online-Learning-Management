@@ -37,7 +37,6 @@ namespace Online_Learning_Management.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new ModuleConfiguration());
             modelBuilder.ApplyConfiguration(new ModuleTaskConfiguration());
             modelBuilder.ApplyConfiguration(new CourseConfiguration());
-            modelBuilder.ApplyConfiguration(new CourseStudentConfiguration());
             modelBuilder.ApplyConfiguration(new ForumConfiguration());
             modelBuilder.ApplyConfiguration(new GradeStudentConfiguration());
             modelBuilder.ApplyConfiguration(new StudentConfiguration());

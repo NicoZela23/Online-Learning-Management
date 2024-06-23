@@ -15,7 +15,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             _studentService = studentService;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetStudentById(Guid id)
         {
             var student = await _studentService.GetStudentByIdAsync(id);
@@ -36,14 +36,14 @@ namespace Online_Learning_Management.Presentation.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateStudent(Guid id, UpdateStudentDTO updateStudentDTO)
         {
             await _studentService.UpdateStudentAsync(id, updateStudentDTO);
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(Guid id)
         {
             await _studentService.DeleteStudentAsync(id);
