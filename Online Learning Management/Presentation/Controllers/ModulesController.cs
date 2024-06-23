@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Application.Modules.Responses;
 using Online_Learning_Management.Domain.Entities.Modules;
 using Online_Learning_Management.Domain.Exceptions.Module;
@@ -32,6 +33,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult<Module>> GetModuleById(Guid id)
         {
             try

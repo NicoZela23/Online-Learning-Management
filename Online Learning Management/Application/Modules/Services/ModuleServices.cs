@@ -42,7 +42,7 @@ namespace Online_Learning_Management.Application.Modules.Services
             var module = await _moduleRepository.GetModuleByIdAsync(id);
             if (module == null)
             {
-                throw new ArgumentException();
+                throw new ModuleNotFoundException();
             }
             await _moduleRepository.DeleteModuleAsync(id);
         }
@@ -58,7 +58,7 @@ namespace Online_Learning_Management.Application.Modules.Services
             var selectedModule = await _moduleRepository.GetModuleByIdAsync(id);
             if (selectedModule == null)
             {
-                throw new ArgumentException();
+                throw new ModuleNotFoundException();
             }
             return _mapper.Map<Module>(selectedModule);
         }
@@ -82,7 +82,6 @@ namespace Online_Learning_Management.Application.Modules.Services
             }
 
             _mapper.Map(updateModuleDto, existingModule);
-
             var updatedModule = await _moduleRepository.UpdateModuleAsync(existingModule);
             return updatedModule;
         }

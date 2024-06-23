@@ -69,7 +69,7 @@ namespace Online_Learning_Management.Application.Auth.Services
             var validator = new UpdateUserValidator();
             var validationResult = await validator.ValidateAsync(updateUserDTO);
 
-            if (validationResult.IsValid) 
+            if (!validationResult.IsValid) 
             { 
                 var errorMessages = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
                 throw new UserValidationException(errorMessages);

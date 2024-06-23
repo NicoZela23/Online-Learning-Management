@@ -14,7 +14,6 @@ namespace Online_Learning_Management.Application.Auth.Validator
            .NotEmpty().WithMessage("Role is required")
            .Must(role => role == "Student" || role == "Instructor" || role == "Admin")
            .WithMessage("Invalid role. Must be Student, Instructor, or Admin.");
-            RuleFor(x => x.CreatedAt).NotEmpty().WithMessage("StartDate is required.");
         }
     }
 }

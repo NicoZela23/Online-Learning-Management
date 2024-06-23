@@ -1,5 +1,4 @@
 ﻿using Online_Learning_Management.Domain.Entities.Auth;
-using Online_Learning_Management.Infrastructure.DTOs.Auth;
 
 namespace Online_Learning_Management.Domain.Interfaces.Auth
 {
@@ -7,6 +6,7 @@ namespace Online_Learning_Management.Domain.Interfaces.Auth
     {
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User>GetUserByIdAsync(Guid id);
+        Task<User> GetUserByLoginCredentials(UserLogin userLogin);
         Task<User>AddUserAsync(User user);
         Task<User>UpdateUserAsync(User user);
         Task DeleteUserAsync(Guid id);

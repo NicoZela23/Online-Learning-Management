@@ -47,5 +47,10 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Auth
             await _context.SaveChangesAsync();
             return result.Entity;
         }
+
+        public async Task<User> GetUserByLoginCredentials(UserLogin userLogin)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == userLogin.Username && u.Password == userLogin.Password);
+        }
     }
 }
