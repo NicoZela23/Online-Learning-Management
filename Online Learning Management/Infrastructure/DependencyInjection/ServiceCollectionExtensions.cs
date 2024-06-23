@@ -15,6 +15,9 @@ using Online_Learning_Management.Infrastructure.Repositories.CourseStudents;
 using Online_Learning_Management.Domain.Interfaces.Forums;
 using Online_Learning_Management.Infrastructure.Repositories.Forum;
 using Online_Learning_Management.Application.Forums.Services;
+using Online_Learning_Management.Domain.Interfaces.Students;
+using Online_Learning_Management.Infrastructure.Students;
+using Online_Learning_Management.Application.Students.Services;
 using Online_Learning_Management.Domain.Interfaces.Files;
 using Online_Learning_Management.Infrastructure.Repositories.Files;
 using Online_Learning_Management.Application.Files.Services;
@@ -24,6 +27,7 @@ using System.Text;
 using Online_Learning_Management.Domain.Interfaces.Auth;
 using Online_Learning_Management.Infrastructure.Repositories.Auth;
 using Online_Learning_Management.Application.Auth.Services;
+
 
 namespace Online_Learning_Management.Infrastructure.DependencyInjection
 {
@@ -39,9 +43,11 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<ICourseStudentsRepository, CourseStudentsRepository>();
             services.AddScoped<IForumRepository, ForumRepository>();
             services.AddScoped<IGradeStudentRepository, GradeStudentRepository>();
+            services.AddScoped<IStudentRepository , StudentRepository>();
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IUserAuthRepository, UserAuthRepository>();
           
+
             //Register services
             services.AddScoped<IModuleService, ModuleServices>();
             services.AddScoped<IModuleTaskService, ModuleTaskService>();
@@ -49,6 +55,7 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<ICourseStudentsService, CourseStudentsService>();
             services.AddScoped<IForumService, ForumService>();
             services.AddScoped<IGradeStudentService, GradeStudentService>();
+            services.AddScoped<IStudentServices , StudentService>();
             services.AddScoped<IFileService, AzureBlobService>();
             services.AddScoped<IAuthUserService, UserService>();
             services.AddScoped<IAuthValidService, AuthService>();
