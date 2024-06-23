@@ -6,8 +6,8 @@ namespace Online_Learning_Management.Domain.Interfaces.Modules
     {
         Task<Module> GetModuleByIdAsync(Guid id);
         Task<IEnumerable<Module>> GetAllModulesAsync();
-        Task AddModuleAsync(Module module);
-        Task UpdateModuleAsync(Module module);
+        Task<Module>AddModuleAsync(Module module);
+        Task<Module>UpdateModuleAsync(Module module);
         Task DeleteModuleAsync(Guid id);
     }
 }

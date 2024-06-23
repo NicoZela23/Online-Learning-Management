@@ -21,7 +21,7 @@ namespace Online_Learning_Management.Application.Modules.Services
             
         }
 
-        public async Task AddModuleAsync(CreateModuleDTO createModuleDTO)
+        public async Task <Module> AddModuleAsync(CreateModuleDTO createModuleDTO)
         {
             var validator = new CreateModuleValidator();
             var validationResult = await validator.ValidateAsync(createModuleDTO);
@@ -33,7 +33,8 @@ namespace Online_Learning_Management.Application.Modules.Services
             }
 
             var module = _mapper.Map<Module>(createModuleDTO);
-            await _moduleRepository.AddModuleAsync(module);
+            var createdModule = await _moduleRepository.AddModuleAsync(module);
+            return createdModule;
         }
 
         public async Task DeleteModuleAsync(Guid id)
@@ -41,7 +42,7 @@ namespace Online_Learning_Management.Application.Modules.Services
             var module = await _moduleRepository.GetModuleByIdAsync(id);
             if (module == null)
             {
-                throw new ArgumentException();
+                throw new ModuleNotFoundException();
             }
             await _moduleRepository.DeleteModuleAsync(id);
         }
@@ -57,12 +58,12 @@ namespace Online_Learning_Management.Application.Modules.Services
             var selectedModule = await _moduleRepository.GetModuleByIdAsync(id);
             if (selectedModule == null)
             {
-                throw new ArgumentException();
+                throw new ModuleNotFoundException();
             }
             return _mapper.Map<Module>(selectedModule);
         }
 
-        public async Task UpdateModuleAsync(Guid id, UpdateModuleDTO updateModuleDto)
+        public async Task <Module> UpdateModuleAsync(Guid id, UpdateModuleDTO updateModuleDto)
         {
             var existingModule = await _moduleRepository.GetModuleByIdAsync(id);
 
@@ -81,8 +82,8 @@ namespace Online_Learning_Management.Application.Modules.Services
             }
 
             _mapper.Map(updateModuleDto, existingModule);
-
-            await _moduleRepository.UpdateModuleAsync(existingModule);
+            var updatedModule = await _moduleRepository.UpdateModuleAsync(existingModule);
+            return updatedModule;
         }
     }
 }

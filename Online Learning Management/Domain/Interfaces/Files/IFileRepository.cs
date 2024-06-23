@@ -6,7 +6,7 @@ namespace Online_Learning_Management.Domain.Interfaces.Files
     {
         Task<FileMetadata> GetFileDataByIdAsync(Guid id);
         Task<IEnumerable<FileMetadata>> GetAllFileDataAsync();
-        Task AddFileDataAsync(FileMetadata data);
+        Task<FileMetadata> AddFileDataAsync(FileMetadata data);
         Task DeleteFileDataAsync(Guid id);
     }
 }

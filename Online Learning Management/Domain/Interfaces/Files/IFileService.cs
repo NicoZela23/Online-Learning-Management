@@ -9,7 +9,7 @@ namespace Online_Learning_Management.Domain.Interfaces.Files
         Task<BlobContentInfo> UploadFileAsync(IFormFile file);
         Task<FileMetadata> GetFileDataByIdAsync(Guid id);
         Task<IEnumerable<FileMetadata>> GetAllFileDataAsync();
-        Task AddFileDataAsync(CreateFileDTO data);
+        Task<FileMetadata>AddFileDataAsync(CreateFileDTO data);
         Task DeleteFileDataAsync(Guid id);
         Task<FileMetadata> UploadAndAddFileAsync(IFormFile file);
     }

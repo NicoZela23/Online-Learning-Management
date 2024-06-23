@@ -26,7 +26,7 @@ namespace Online_Learning_Management.Application.Files.Services
             _mapper = mapper;
         }
 
-        public async Task AddFileDataAsync(CreateFileDTO data)
+        public async Task <FileMetadata>AddFileDataAsync(CreateFileDTO data)
         {
             var validator = new CreateFileValidator();
             var validationResult = await validator.ValidateAsync(data);
@@ -38,7 +38,8 @@ namespace Online_Learning_Management.Application.Files.Services
             }
 
             var file = _mapper.Map<FileMetadata>(data);
-            await _fileRepository.AddFileDataAsync(file);
+            var fileCreated = await _fileRepository.AddFileDataAsync(file);
+            return fileCreated;
         }
 
         public async Task DeleteFileDataAsync(Guid id)
@@ -83,9 +84,13 @@ namespace Online_Learning_Management.Application.Files.Services
 
         public async Task<FileMetadata> UploadAndAddFileAsync(IFormFile file)
         {
-            var blobInfo = await UploadFileAsync(file);
-            var blobName = file.FileName;
-            var blobUrl = new Uri(_containerClient.Uri, blobName).ToString();
+            var blobClient = _containerClient.GetBlobClient(file.FileName);
+            using (var stream = file.OpenReadStream())
+            {
+                await blobClient.UploadAsync(stream, true);
+            }
+
+            var blobUrl = blobClient.Uri.ToString();
             var createFileDTO = _mapper.Map<CreateFileDTO>((file, blobUrl));
             await AddFileDataAsync(createFileDTO);
             var fileMetadata = _mapper.Map<FileMetadata>(createFileDTO);

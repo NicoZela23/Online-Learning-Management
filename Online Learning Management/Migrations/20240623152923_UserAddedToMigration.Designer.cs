@@ -12,8 +12,8 @@ using Online_Learning_Management.Infrastructure.Data;
 namespace Online_Learning_Management.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240621190625_FileTableAdded")]
-    partial class FileTableAdded
+    [Migration("20240623152923_UserAddedToMigration")]
+    partial class UserAddedToMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,37 @@ namespace Online_Learning_Management.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Auth.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
 
             modelBuilder.Entity("Online_Learning_Management.Domain.Entities.CourseStudent.CourseStudent", b =>
                 {
@@ -56,9 +87,16 @@ namespace Online_Learning_Management.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DurationInWeeks")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdInstructor")
                         .HasColumnType("int");
@@ -155,19 +193,33 @@ namespace Online_Learning_Management.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateOnly?>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime?>("Deadline")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ModuleID")
+                    b.Property<Guid?>("ModuleID")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ModuleID");
 
                     b.ToTable("ModuleTasks");
                 });
@@ -216,6 +268,15 @@ namespace Online_Learning_Management.Migrations
                     b.HasIndex("CourseID");
 
                     b.ToTable("Modules");
+                });
+
+            modelBuilder.Entity("Online_Learning_Management.Domain.Entities.ModuleTasks.ModuleTask", b =>
+                {
+                    b.HasOne("Online_Learning_Management.Domain.Entities.Modules.Module", null)
+                        .WithMany()
+                        .HasForeignKey("ModuleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Online_Learning_Management.Domain.Entities.Modules.Module", b =>
