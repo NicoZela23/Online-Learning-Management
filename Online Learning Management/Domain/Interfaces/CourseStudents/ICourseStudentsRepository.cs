@@ -9,5 +9,7 @@ public interface ICourseStudentsRepository
     
     // new method to get a student by student and course
     Task<CourseStudent> GetCourseStudentByStudentAndCourseAsync(Guid studentId, Guid courseId);
+
+    Task AddCourseStudentAsync(CourseStudent courseStudent);
     
 }

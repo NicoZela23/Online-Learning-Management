@@ -35,10 +35,16 @@ namespace Online_Learning_Management.Infrastructure.Repositories.CourseStudents
             }
         }
         // new method to get a student by student and course
-            public async Task<CourseStudent> GetCourseStudentByStudentAndCourseAsync(Guid studentId, Guid courseId)
-    {
-        return await _context.CourseStudents
-            .FirstOrDefaultAsync(cs => cs.StudentID == studentId && cs.CourseID == courseId);
-    }
+        public async Task<CourseStudent> GetCourseStudentByStudentAndCourseAsync(Guid studentId, Guid courseId)
+        {
+            return await _context.CourseStudents
+                .FirstOrDefaultAsync(cs => cs.StudentID == studentId && cs.CourseID == courseId);
+        }
+
+        public Task AddCourseStudentAsync(CourseStudent courseStudent)
+        {
+            _context.CourseStudents.Add(courseStudent);
+            return _context.SaveChangesAsync();
+        }
     }
 }

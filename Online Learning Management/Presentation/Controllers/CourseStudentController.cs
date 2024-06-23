@@ -70,23 +70,37 @@ namespace Online_Learning_Management.Presentation.Controllers
 
         // new method to withdraw a student from a course
 
-           [HttpPost("withdraw")] // POST api/coursestudent/withdraw
-    public async Task<IActionResult> WithdrawCourseStudentAsync([FromBody] WithdrawCourseStudentRequest request)
-    {
-        try
+        [HttpPost("withdraw")] // POST api/coursestudent/withdraw
+        public async Task<IActionResult> WithdrawCourseStudentAsync([FromBody] WithdrawCourseStudentRequest request)
         {
-            await _courseStudentsService.WithdrawCourseStudentAsync(request.StudentId, request.CourseId);
-            return NoContent( new { message = "Student has been withdrawn from the course" });
+            try
+            {
+                await _courseStudentsService.WithdrawCourseStudentAsync(request.StudentId, request.CourseId);
+                return NoContent(new { message = "Student has been withdrawn from the course" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while withdrawing from the course", details = ex.Message });
+            }
         }
-        catch (KeyNotFoundException ex)
+
+        [HttpPost]
+        public async Task<IActionResult> EnrollStudent(EnrollStudentDTO enrollStudentDTO)
         {
-            return NotFound(new { message = ex.Message });
+            try
+            {
+                await _courseStudentsService.EnrollCourseStudentAsync(enrollStudentDTO);
+                return Ok("Student enrolled successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while enrolling student", details = ex.Message });
+            }
         }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { message = "An error occurred while withdrawing from the course", details = ex.Message });
-        }
-    }
 
         private IActionResult NoContent(object value)
         {
