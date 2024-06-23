@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Online_Learning_Management.Application.Modules.Responses;
 using Online_Learning_Management.Domain.Entities.Modules;
 using Online_Learning_Management.Domain.Exceptions.Module;
 using Online_Learning_Management.Domain.Interfaces.Modules;
@@ -52,8 +53,9 @@ namespace Online_Learning_Management.Presentation.Controllers
         {
             try
             {
-                await _moduleService.AddModuleAsync(moduleDto);
-                return StatusCode(201, moduleDto);
+                var createdModule = await _moduleService.AddModuleAsync(moduleDto);
+                var response = new ApiResponse("User created successfully", createdModule);
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -66,8 +68,9 @@ namespace Online_Learning_Management.Presentation.Controllers
         {
             try
             {
-                await _moduleService.UpdateModuleAsync(id, moduleDto);
-                return Ok(moduleDto);
+                var updatedModule = await _moduleService.UpdateModuleAsync(id, moduleDto);
+                var response = new ApiResponse("User updated successfully", updatedModule);
+                return Ok(response);
             }
             catch (ModuleNotFoundException ex)
             {
@@ -87,9 +90,9 @@ namespace Online_Learning_Management.Presentation.Controllers
                 await _moduleService.DeleteModuleAsync(id);
                 return NoContent();
             }
-            catch (ArgumentException)
+            catch (ModuleNotFoundException ex)
             {
-                return NotFound("Module not found.");
+                return NotFound(ex.Message);
             }
         }
     }

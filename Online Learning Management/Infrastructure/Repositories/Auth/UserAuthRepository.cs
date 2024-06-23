@@ -14,10 +14,11 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Auth
             _context = context;
         }
 
-        public async Task AddUserAsync(User user)
+        public async Task <User> AddUserAsync(User user)
         {
-            await _context.Users.AddAsync(user);
+            var result = await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
 
         public async Task DeleteUserAsync(Guid id)
@@ -40,10 +41,11 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Auth
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task <User> UpdateUserAsync(User user)
         {
-            _context.Users.Update(user);
+            var result = _context.Users.Update(user);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
     }
 }

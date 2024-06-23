@@ -26,7 +26,7 @@ namespace Online_Learning_Management.Application.Files.Services
             _mapper = mapper;
         }
 
-        public async Task AddFileDataAsync(CreateFileDTO data)
+        public async Task <FileMetadata>AddFileDataAsync(CreateFileDTO data)
         {
             var validator = new CreateFileValidator();
             var validationResult = await validator.ValidateAsync(data);
@@ -38,7 +38,8 @@ namespace Online_Learning_Management.Application.Files.Services
             }
 
             var file = _mapper.Map<FileMetadata>(data);
-            await _fileRepository.AddFileDataAsync(file);
+            var fileCreated = await _fileRepository.AddFileDataAsync(file);
+            return fileCreated;
         }
 
         public async Task DeleteFileDataAsync(Guid id)

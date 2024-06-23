@@ -17,7 +17,7 @@ namespace Online_Learning_Management.Application.Auth.Services
             _mapper = mapper;
         }
     
-        public async Task AddUserAsync(CreateUserDTO createUserDTO)
+        public async Task <User> AddUserAsync(CreateUserDTO createUserDTO)
         {
             var validator = new CreateUserValidator();
             var validationResult = await validator.ValidateAsync(createUserDTO);
@@ -28,7 +28,8 @@ namespace Online_Learning_Management.Application.Auth.Services
                 throw new ArgumentException(errorMessages);
             }
             var user = _mapper.Map<User>(createUserDTO);
-            await _userAuthRepository.AddUserAsync(user);
+            var createdUser = await _userAuthRepository.AddUserAsync(user);
+            return createdUser;
         }
 
         public async Task DeleteUserAsync(Guid id)
@@ -57,7 +58,7 @@ namespace Online_Learning_Management.Application.Auth.Services
             return _mapper.Map<User>(selectedUser);
         }
 
-        public async Task UpdateUserAsync(Guid id, UpdateUserDTO updateUserDTO)
+        public async Task <User> UpdateUserAsync(Guid id, UpdateUserDTO updateUserDTO)
         {
             var existingUser = await _userAuthRepository.GetUserByIdAsync(id);
 
@@ -74,7 +75,8 @@ namespace Online_Learning_Management.Application.Auth.Services
                 throw new UserValidationException(errorMessages);
             }
             _mapper.Map(updateUserDTO, existingUser);
-            await _userAuthRepository.UpdateUserAsync(existingUser);
+            var updatedUser = await _userAuthRepository.UpdateUserAsync(existingUser);
+            return updatedUser;
         }
     }
 }

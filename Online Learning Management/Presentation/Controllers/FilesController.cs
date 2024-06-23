@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Online_Learning_Management.Application.Files.Responses;
 using Online_Learning_Management.Domain.Entities.Files;
 using Online_Learning_Management.Domain.Interfaces.Files;
 
@@ -64,7 +65,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 var fileMetadata = await _fileService.UploadAndAddFileAsync(file);
-                return Ok(fileMetadata);
+                var response = new ApiResponce("File created successfully",fileMetadata);
+                return Ok(response);
             }
             catch (Exception ex)
             { 

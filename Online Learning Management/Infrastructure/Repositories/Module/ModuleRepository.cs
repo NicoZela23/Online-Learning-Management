@@ -23,16 +23,18 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Modules
         {
             return await _context.Modules.ToListAsync();
         }
-        public async Task AddModuleAsync(Module module)
+        public async Task<Module> AddModuleAsync(Module module)
         {
-            await _context.Modules.AddAsync(module);
+            var result = await _context.Modules.AddAsync(module);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
 
-        public async Task UpdateModuleAsync(Module module)
+        public async Task <Module> UpdateModuleAsync(Module module)
         {
-            _context.Modules.Update(module);
+            var result = _context.Modules.Update(module);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
 
         public async Task DeleteModuleAsync(Guid id)

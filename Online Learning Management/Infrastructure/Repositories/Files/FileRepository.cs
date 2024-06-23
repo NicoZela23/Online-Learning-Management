@@ -12,10 +12,11 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Files
         { 
             _context = context;
         }
-        public async Task AddFileDataAsync(FileMetadata data)
+        public async Task<FileMetadata> AddFileDataAsync(FileMetadata data)
         {
-            await _context.UploadedFiles.AddAsync(data);
+            var result = await _context.UploadedFiles.AddAsync(data);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
         public async Task DeleteFileDataAsync(Guid id)
         {

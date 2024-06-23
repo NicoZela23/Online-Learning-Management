@@ -7,8 +7,8 @@ namespace Online_Learning_Management.Domain.Interfaces.Auth
     {
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(Guid id);
-        Task AddUserAsync(CreateUserDTO user);
-        Task UpdateUserAsync(Guid id, UpdateUserDTO user);
+        Task<User>AddUserAsync(CreateUserDTO user);
+        Task<User>UpdateUserAsync(Guid id, UpdateUserDTO user);
         Task DeleteUserAsync(Guid id);
     }
 
