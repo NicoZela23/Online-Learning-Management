@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Online_Learning_Management.Application.ModuleTasks.Responses;
 using Online_Learning_Management.Domain.Entities.ModuleTasks;
 using Online_Learning_Management.Domain.Interfaces.ModuleTasks;
 using Online_Learning_Management.Infrastructure.DTOs.ModuleTask;
@@ -6,7 +7,7 @@ using System.Reflection;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
-    [Route("module/tasks")]
+    [Route("api/modules")]
     [ApiController]
     public class ModuleTasksController : ControllerBase
     {
@@ -17,13 +18,13 @@ namespace Online_Learning_Management.Presentation.Controllers
             _moduleTaskService = moduleTaskService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ModuleTask>>> GetAllTasksModule()
+        [HttpGet("{moduleID}/tasks")]
+        public async Task<ActionResult<IEnumerable<ModuleTask>>> GetAllTasksModule(Guid moduleID)
         {
             try
             {
-                var moduleTasks = await _moduleTaskService.GetAllTasksOfModuleAsync();
-                return Ok(moduleTasks);
+                var moduleTask = await _moduleTaskService.GetAllTasksOfModuleAsync(moduleID);
+                return Ok(moduleTask);
             }
             catch (Exception ex)
             {
@@ -31,12 +32,12 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ModuleTask>> GetTaskOfModuleById(Guid id)
+        [HttpGet("tasks/{taskID}")]
+        public async Task<ActionResult<ModuleTask>> GetTaskOfModuleById(Guid taskID)
         {
             try
             {
-                var moduleTask = await _moduleTaskService.GetTaskOfModuleByIdAsync(id);
+                var moduleTask = await _moduleTaskService.GetTaskOfModuleByIdAsync(taskID);
 
                 if (moduleTask == null)
                 {
@@ -51,13 +52,18 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("tasks")]
         public async Task<ActionResult> AddTaskToModule(CreateModuleTaskDTO moduleTaskDto)
         {
             try
             {
-                await _moduleTaskService.AddTaskToModuleAsync(moduleTaskDto);
-                return StatusCode(201);
+                var createdModuleTask = await _moduleTaskService.AddTaskToModuleAsync(moduleTaskDto);
+                var response = new ApiResponse(
+                    "Module task created successfully",
+                    createdModuleTask
+                );
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
@@ -65,15 +71,20 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("tasks/{taskID}")]
         public async Task<ActionResult> UpdateTaskOfModule(
-            Guid id, 
+            Guid taskID, 
             [FromBody] UpdateModuleTaskDTO moduleTaskDto)
         {
             try
             {
-                await _moduleTaskService.UpdateTaskOfModuleAsync(id, moduleTaskDto);
-                return Ok();
+                var updatedModuleTask = await _moduleTaskService.UpdateTaskOfModuleAsync(taskID, moduleTaskDto);
+                var response = new ApiResponse(
+                    "Module task updated successfully",
+                    updatedModuleTask
+                );
+
+                return Ok(response);
             }
             catch (ArgumentException)
             {
@@ -85,13 +96,13 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTaskOfModule(Guid id)
+        [HttpDelete("tasks/{taskID}")]
+        public async Task<ActionResult> DeleteTaskOfModule(Guid taskID)
         {
             try
             {
-                await _moduleTaskService.DeleteTaskOfModuleAsync(id);
-                return NoContent();
+                await _moduleTaskService.DeleteTaskOfModuleAsync(taskID);
+                return Ok(new { message = "Task deleted successfully" });
             }
             catch (ArgumentException)
             {

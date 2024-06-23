@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using Online_Learning_Management.Application.CourseStudents;
+using Online_Learning_Management.Domain.Entities.CourseStudent;
 using Online_Learning_Management.Domain.Interfaces.CourseStudents;
 using Online_Learning_Management.Infrastructure.DTOs.CourseStudents;
 
@@ -43,4 +44,23 @@ public class CourseStudentsService : ICourseStudentsService
         }
         await _courseStudentsRepository.DeleteCourseStudentAsync(id);
     }
+
+    // new method to add a student to a course
+    public async Task WithdrawCourseStudentAsync(Guid studentId, Guid courseId)
+    {
+        var courseStudent = await _courseStudentsRepository.GetCourseStudentByStudentAndCourseAsync(studentId, courseId);
+        if (courseStudent == null)
+        {
+            throw new KeyNotFoundException("The student is not enrolled in the course");
+        }
+        await _courseStudentsRepository.DeleteCourseStudentAsync(courseStudent.Id);
+    }
+
+    public async Task EnrollCourseStudentAsync(EnrollStudentDTO enrollStudentDTO)
+    {
+        var courseStudent = _mapper.Map<CourseStudent>(enrollStudentDTO);
+        await _courseStudentsRepository.AddCourseStudentAsync(courseStudent);
+    }
+
+
 }

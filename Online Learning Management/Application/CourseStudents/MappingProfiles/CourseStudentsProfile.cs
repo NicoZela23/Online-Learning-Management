@@ -9,6 +9,7 @@ namespace Online_Learning_Management.Application.CourseStudents.MappingProfiles
         public CourseStudentsProfile()
         {
             CreateMap<CourseStudent, CourseStudentDTO>();
+            CreateMap<EnrollStudentDTO, CourseStudent>();
         }
     }
 }

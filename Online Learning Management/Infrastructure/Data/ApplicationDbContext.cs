@@ -12,6 +12,8 @@ using Online_Learning_Management.Infrastructure.Repositories.GradeStudentss;
 using Online_Learning_Management.Domain.Entities.Courses;
 using Online_Learning_Management.Domain.Entities.Students;
 using Online_Learning_Management.Infrastructure.Repositories.Students;
+using Online_Learning_Management.Domain.Entities.Files;
+using Online_Learning_Management.Infrastructure.Repositories.Files;
 using Online_Learning_Management.Infrastructure.Repositories;
 
 namespace Online_Learning_Management.Infrastructure.Data
@@ -28,6 +30,7 @@ namespace Online_Learning_Management.Infrastructure.Data
         public DbSet<Forum> Forums { get; set; }
         public DbSet<GradeStudents> GradeStudents { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<FileMetadata> UploadedFiles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,9 +40,11 @@ namespace Online_Learning_Management.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new ModuleConfiguration());
             modelBuilder.ApplyConfiguration(new ModuleTaskConfiguration());
             modelBuilder.ApplyConfiguration(new CourseConfiguration());
+            modelBuilder.ApplyConfiguration(new CourseStudentConfiguration());
             modelBuilder.ApplyConfiguration(new ForumConfiguration());
             modelBuilder.ApplyConfiguration(new GradeStudentConfiguration());
             modelBuilder.ApplyConfiguration(new StudentConfiguration());
+            modelBuilder.ApplyConfiguration(new FileConfiguration());
         }
     }
 }

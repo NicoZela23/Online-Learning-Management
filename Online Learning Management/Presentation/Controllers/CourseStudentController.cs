@@ -60,12 +60,58 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _courseStudentsService.DeleteCourseStudentAsync(id);
-                return NoContent();
+                return NoContent(new { message = "Course student has been deleted" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while deleting course student", details = ex.Message });
             }
         }
+
+        // new method to withdraw a student from a course
+
+        [HttpPost("withdraw")] // POST api/coursestudent/withdraw
+        public async Task<IActionResult> WithdrawCourseStudentAsync([FromBody] WithdrawCourseStudentRequest request)
+        {
+            try
+            {
+                await _courseStudentsService.WithdrawCourseStudentAsync(request.StudentId, request.CourseId);
+                return NoContent(new { message = "Student has been withdrawn from the course" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while withdrawing from the course", details = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EnrollStudent(EnrollStudentDTO enrollStudentDTO)
+        {
+            try
+            {
+                await _courseStudentsService.EnrollCourseStudentAsync(enrollStudentDTO);
+                return Ok("Student enrolled successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while enrolling student", details = ex.Message });
+            }
+        }
+
+        private IActionResult NoContent(object value)
+        {
+            throw new NotImplementedException();
+        }
     }
+}
+
+
+public class WithdrawCourseStudentRequest
+{
+    public Guid StudentId { get; set; }
+    public Guid CourseId { get; set; }
 }

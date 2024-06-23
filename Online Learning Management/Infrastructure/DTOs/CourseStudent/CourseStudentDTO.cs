@@ -8,9 +8,11 @@ namespace Online_Learning_Management.Infrastructure.DTOs.CourseStudents
         public Guid Id { get; set; }
 
         [Required]
-        public string CourseID { get; set; }
+        public Guid CourseID { get; set; }
 
         [Required]
-        public string StudentID { get; set; }
+        public Guid StudentID { get; set; }
+        public DateTime EnrollmentDate { get; set; }
+        public decimal Progress { get; set; }
     }
 }
