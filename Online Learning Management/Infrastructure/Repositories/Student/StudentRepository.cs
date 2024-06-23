@@ -14,10 +14,11 @@ namespace Online_Learning_Management.Infrastructure.Students
             _context = context;
         }
 
-        public async Task AddStudentAsync(Student student)
+        public async Task<Student> AddStudentAsync(Student student)
         {
-            await _context.Students.AddAsync(student);
+            var result = await _context.Students.AddAsync(student);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
         public async Task DeleteStudentAsync(Guid id)
         {

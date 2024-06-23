@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Online_Learning_Management.Application.Students.Responses;
 using Online_Learning_Management.Domain.Interfaces.Students;
 using Online_Learning_Management.Infrastructure.DTOs.Student;
+using System.Threading.Tasks;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
@@ -32,8 +34,14 @@ namespace Online_Learning_Management.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> AddStudent(CreateStudentDTO createStudentDTO)
         {
-            await _studentService.AddStudentAsync(createStudentDTO);
-            return Ok();
+            
+                var createdStudent = await _studentService.AddStudentAsync(createStudentDTO);
+                var response = new StudentResponses(
+                    "Student Created succesfully",
+                    createdStudent
+                    );
+                return Ok(response);
+           
         }
 
         [HttpPut("{id}")]
@@ -46,8 +54,19 @@ namespace Online_Learning_Management.Presentation.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(Guid id)
         {
-            await _studentService.DeleteStudentAsync(id);
-            return Ok();
+            try
+            {
+                await _studentService.DeleteStudentAsync(id);
+                return Ok(new { message = "Student deleted successfully" });
+            }
+            catch (ArgumentException)
+            {
+                return NotFound("The Student does not exist.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }   
     }
 }

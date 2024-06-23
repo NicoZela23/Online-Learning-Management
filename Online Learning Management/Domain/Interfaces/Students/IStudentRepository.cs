@@ -6,7 +6,7 @@ namespace Online_Learning_Management.Domain.Interfaces.Students
     {
         Task<Student> GetStudentByIdAsync(Guid id);
         Task<IEnumerable<Student>> GetAllStudentsAsync();
-        Task AddStudentAsync(Student student);
+        Task<Student> AddStudentAsync(Student student);
         Task UpdateStudentAsync(Student student);
         Task DeleteStudentAsync(Guid id);
     }
