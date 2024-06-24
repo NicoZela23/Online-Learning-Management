@@ -8,8 +8,5 @@ namespace Online_Learning_Management.Domain.Entities.CourseStudent
         public Guid CourseID { get; set; }
         public Guid StudentID { get; set; }
         public DateTime EnrollmentDate{get;set;} = DateTime.UtcNow;
-        public decimal Progress { get; set; }
-       
-       
     }
 }
