@@ -27,6 +27,9 @@ using System.Text;
 using Online_Learning_Management.Domain.Interfaces.Auth;
 using Online_Learning_Management.Infrastructure.Repositories.Auth;
 using Online_Learning_Management.Application.Auth.Services;
+using Online_Learning_Management.Domain.Interfaces.ReportCourses;
+using Online_Learning_Management.Infrastructure.Repositories.ReportCourses;
+using Online_Learning_Management.Application.ReportCourses.Services;
 
 
 namespace Online_Learning_Management.Infrastructure.DependencyInjection
@@ -46,6 +49,7 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IStudentRepository , StudentRepository>();
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IUserAuthRepository, UserAuthRepository>();
+            services.AddScoped<IReportCourseRepository, ReportCourseRepository>();
           
 
             //Register services
@@ -59,6 +63,7 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IFileService, AzureBlobService>();
             services.AddScoped<IAuthUserService, UserService>();
             services.AddScoped<IAuthValidService, AuthService>();
+            services.AddScoped<IReportCourseService, ReportCourseService>();
 
 
             //Register AutoMapper
