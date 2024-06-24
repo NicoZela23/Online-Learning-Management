@@ -19,6 +19,8 @@ using Online_Learning_Management.Domain.Entities.Auth;
 using Online_Learning_Management.Infrastructure.Repositories.Auth;
 using Online_Learning_Management.Domain.Entities.ReportCourses;
 using Online_Learning_Management.Infrastructure.Repositories.ReportCourses;
+using Online_Learning_Management.Domain.Entities.TaskStudents;
+using Online_Learning_Management.Infrastructure.Repositories.TaskStudents;
 
 namespace Online_Learning_Management.Infrastructure.Data
 {
@@ -37,6 +39,7 @@ namespace Online_Learning_Management.Infrastructure.Data
         public DbSet<FileMetadata> UploadedFiles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ReportCourse> ReportCourses { get; set; }
+        public DbSet<TaskStudent> TaskStudents { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,6 +56,7 @@ namespace Online_Learning_Management.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new FileConfiguration());
             modelBuilder.ApplyConfiguration(new UserAuthConfiguration());
             modelBuilder.ApplyConfiguration(new ReportCourseConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskStudentConfiguration());
         }
     }
 }

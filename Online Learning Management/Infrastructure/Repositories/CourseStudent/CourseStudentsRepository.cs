@@ -41,10 +41,22 @@ namespace Online_Learning_Management.Infrastructure.Repositories.CourseStudents
                 .FirstOrDefaultAsync(cs => cs.StudentID == studentId && cs.CourseID == courseId);
         }
 
-        public Task AddCourseStudentAsync(CourseStudent courseStudent)
+        public async Task AddCourseStudentAsync(CourseStudent courseStudent)
         {
             _context.CourseStudents.Add(courseStudent);
-            return _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> CourseExistsAsync(Guid courseId)
+        {
+            return await _context.Courses.AnyAsync(c => c.Id == courseId);
+        }
+
+        public async Task<bool> StudentExistsAsync(Guid studentId)
+        {
+            return await _context.Students.AnyAsync(s => s.Id == studentId);
+        }
+
+
     }
 }
