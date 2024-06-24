@@ -19,8 +19,8 @@ namespace Online_Learning_Management.Migrations
                     ModuleTaskID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StudentID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FileID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Qualification = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(250)", nullable: false),
+                    Qualification = table.Column<int>(type: "int", nullable: true, defaultValue: 0),
+                    Comment = table.Column<string>(type: "nvarchar(250)", nullable: true),
                     UploadDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>

@@ -12,7 +12,7 @@ using Online_Learning_Management.Infrastructure.Data;
 namespace Online_Learning_Management.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240624142446_TaskStudents")]
+    [Migration("20240624143830_TaskStudents")]
     partial class TaskStudents
     {
         /// <inheritdoc />
@@ -316,7 +316,6 @@ namespace Online_Learning_Management.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<Guid?>("FileID")
@@ -328,8 +327,9 @@ namespace Online_Learning_Management.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("Qualification")
-                        .IsRequired()
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<Guid?>("StudentID")
                         .IsRequired()

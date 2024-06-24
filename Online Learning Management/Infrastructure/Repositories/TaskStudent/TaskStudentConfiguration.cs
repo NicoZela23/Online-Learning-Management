@@ -24,11 +24,12 @@ namespace Online_Learning_Management.Infrastructure.Repositories.TaskStudents
 
             builder.Property(x => x.Qualification)
                 .HasColumnType("int")
-                .IsRequired();
+                .HasDefaultValue(0)
+                .IsRequired(false);
 
             builder.Property(x => x.Comment)
                 .HasColumnType("nvarchar(250)")
-                .IsRequired();
+                .IsRequired(false);
 
             builder.Property(x => x.UploadDate)
                 .IsRequired()
