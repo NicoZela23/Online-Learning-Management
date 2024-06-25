@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
+using Online_Learning_Management.Infrastructure.DTOs.Instructor;
 
-using Online_Learning_Management.Infrastructure.DTOs.Student;
-
-namespace Online_Learning_Management.Application.Students.Validator
+namespace Online_Learning_Management.Application.Instructors.Validator
 {
-    public class CreateStudentValidator : AbstractValidator<CreateStudentDTO>
+    public class CreateInstructorValidator : AbstractValidator<CreateInstructorDTO>
     {
-        public CreateStudentValidator()
+        public CreateInstructorValidator() 
         {
             RuleFor(x => x.UserId).NotEmpty().WithMessage("User Id is required");
             RuleFor(x => x.Name).NotEmpty().WithMessage("First Name is required");

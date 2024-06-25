@@ -48,7 +48,7 @@ namespace Online_Learning_Management.Application.Students.Services
                 throw new ArgumentException(errors);
             }
             var student = _mapper.Map<Student>(createStudentDTO);
-            student.CreateAt = DateOnly.FromDateTime(DateTime.Now);
+            student.CreateAt = DateTime.Now;
             var createdStudent = await _studentRepository.AddStudentAsync(student);
             return createdStudent;
         }
@@ -63,7 +63,6 @@ namespace Online_Learning_Management.Application.Students.Services
             student.Name = updateStudentDTO.Name;
             student.LastName = updateStudentDTO.LastName;
             student.Email = updateStudentDTO.Email;
-            student.UpdateAt = DateOnly.FromDateTime(DateTime.Now);
             await _studentRepository.UpdateStudentAsync(student);
         }
 

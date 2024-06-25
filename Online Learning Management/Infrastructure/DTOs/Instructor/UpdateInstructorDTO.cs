@@ -1,6 +1,6 @@
-﻿namespace Online_Learning_Management.Infrastructure.DTOs.Student
+﻿namespace Online_Learning_Management.Infrastructure.DTOs.Instructor
 {
-    public class UpdateStudentDTO
+    public class UpdateInstructorDTO
     {
         public string? Name { get; set; }
         public string? LastName { get; set; }

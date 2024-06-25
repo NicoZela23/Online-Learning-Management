@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\Instructors\Services\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
