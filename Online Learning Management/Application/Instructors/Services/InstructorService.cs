@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Online_Learning_Management.Application.Instructors.Validator;
 using Online_Learning_Management.Domain.Entities.Instructors;
 using Online_Learning_Management.Domain.Exceptions.Auth;
 using Online_Learning_Management.Domain.Interfaces.Instructors;
@@ -20,14 +19,6 @@ namespace Online_Learning_Management.Application.Instructors.Services
 
         public async Task AddInstructorAsync(CreateInstructorDTO createInstructorDTO)
         {
-            var validator = new CreateInstructorValidator();
-            var validationResult = await validator.ValidateAsync(createInstructorDTO);
-
-            if (!validationResult.IsValid)
-            {
-                var errorMessages = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
-                throw new ArgumentException(errorMessages);
-            }
             var instructor = _mapper.Map<Instructor>(createInstructorDTO);
             await _instructorRepository.AddInstructorAsync(instructor);
         }

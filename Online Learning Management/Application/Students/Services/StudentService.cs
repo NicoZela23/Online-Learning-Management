@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Online_Learning_Management.Application.Students.Validator;
 using Online_Learning_Management.Domain.Entities.Students;
 using Online_Learning_Management.Domain.Exceptions.Auth;
 using Online_Learning_Management.Domain.Interfaces.Students;
@@ -41,13 +40,6 @@ namespace Online_Learning_Management.Application.Students.Services
 
         public async Task AddStudentAsync(CreateStudentDTO createStudentDTO)
         {
-            var validator = new CreateStudentValidator();
-            var validate = await validator.ValidateAsync(createStudentDTO);
-            if (!validate.IsValid) 
-            {
-                var errors = string.Join("; ", validate.Errors.Select(e => e.ErrorMessage));
-                throw new ArgumentException(errors);
-            }
             var student = _mapper.Map<Student>(createStudentDTO);
             await _studentRepository.AddStudentAsync(student);
         }

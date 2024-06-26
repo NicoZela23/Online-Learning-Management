@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.20.0" />
     <PackageReference Include="DotNetEnv" Version="3.0.0" />
@@ -31,7 +38,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Instructors\Services\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
