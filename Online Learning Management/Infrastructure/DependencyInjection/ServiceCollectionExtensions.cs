@@ -27,10 +27,12 @@ using System.Text;
 using Online_Learning_Management.Domain.Interfaces.Auth;
 using Online_Learning_Management.Infrastructure.Repositories.Auth;
 using Online_Learning_Management.Application.Auth.Services;
+using Online_Learning_Management.Application.TaskStudent.Services;
+using Online_Learning_Management.Domain.Interfaces.TaskStudents;
+using Online_Learning_Management.Infrastructure.Repositories.TaskStudents;
 using Online_Learning_Management.Domain.Interfaces.Instructors;
 using Online_Learning_Management.Infrastructure.Repositories.Instructors;
 using Online_Learning_Management.Application.Instructors.Services;
-
 
 namespace Online_Learning_Management.Infrastructure.DependencyInjection
 {
@@ -49,9 +51,10 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IStudentRepository , StudentRepository>();
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IUserAuthRepository, UserAuthRepository>();
+            services.AddScoped<ITaskStudentRepository, TaskStudentRepository>();
             services.AddScoped<INstructorRepository, InstructorRepository>();
-          
 
+          
             //Register services
             services.AddScoped<IModuleService, ModuleServices>();
             services.AddScoped<IModuleTaskService, ModuleTaskService>();
@@ -63,8 +66,8 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IFileService, AzureBlobService>();
             services.AddScoped<IAuthUserService, UserService>();
             services.AddScoped<IAuthValidService, AuthService>();
+            services.AddScoped<ITaskStudentService, TaskStudentService>();
             services.AddScoped<INstructorService, InstructorService>();
-
 
             //Register AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

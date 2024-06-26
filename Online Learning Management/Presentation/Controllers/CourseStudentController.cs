@@ -96,9 +96,17 @@ namespace Online_Learning_Management.Presentation.Controllers
                 await _courseStudentsService.EnrollCourseStudentAsync(enrollStudentDTO);
                 return Ok("Student enrolled successfully");
             }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidOperationException ex) when (ex.Message == "The student is already enrolled in the course")
+            {
+                return StatusCode(409, ex.Message);
+            }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while enrolling student", details = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 

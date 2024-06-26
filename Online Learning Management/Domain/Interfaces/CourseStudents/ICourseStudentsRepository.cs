@@ -6,10 +6,8 @@ public interface ICourseStudentsRepository
     Task<IEnumerable<CourseStudent>> GetAllCourseStudentsAsync();
     Task<CourseStudent> GetCourseStudentByIdAsync(Guid Id);
     Task DeleteCourseStudentAsync(Guid courseStudentId);
-    
-    // new method to get a student by student and course
     Task<CourseStudent> GetCourseStudentByStudentAndCourseAsync(Guid studentId, Guid courseId);
-
     Task AddCourseStudentAsync(CourseStudent courseStudent);
-    
+    Task<bool> CourseExistsAsync(Guid courseId);
+    Task<bool> StudentExistsAsync(Guid studentId); 
 }
