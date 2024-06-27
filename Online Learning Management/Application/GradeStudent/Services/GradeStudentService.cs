@@ -31,7 +31,7 @@ namespace Online_Learning_Management.Application.GradeStudent.Services
             await _gradeStudentRepository.DeleteGradeAsync(id);
         }
 
-        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByCourseIdAsync(int courseId)
+        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByCourseIdAsync(Guid courseId)
         {
             var gradeStudents = await _gradeStudentRepository.GetGradeStudentByCourseId(courseId);
             return _mapper.Map<IEnumerable<GradeStudents>>(gradeStudents);
@@ -48,13 +48,13 @@ namespace Online_Learning_Management.Application.GradeStudent.Services
         }
        
 
-        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByStudentIdAndCourseIdAsync(int studentId, int courseId)
+        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByStudentIdAndCourseIdAsync(Guid studentId, Guid courseId)
         {
             var gradeStudents = await _gradeStudentRepository.GetGradeStudentByStudentIdAndCourseId(studentId ,courseId);
             return _mapper.Map<IEnumerable<GradeStudents>>(gradeStudents);
         }
 
-        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByStudentIdAsync(int studentId)
+        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByStudentIdAsync(Guid studentId)
         {
             var gradeStudents = await _gradeStudentRepository.GetGradeStudentByStudentId(studentId);
             return _mapper.Map<IEnumerable<GradeStudents>>(gradeStudents);

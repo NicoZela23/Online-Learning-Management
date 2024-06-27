@@ -14,12 +14,13 @@ namespace Online_Learning_Management.Presentation.Controllers
         {
             _gradeStudentService = gradeStudentService;
         }
-        [HttpGet("student/{id:guid}")]
-        public async Task<IActionResult> Get(Guid id)
+
+        [HttpGet("course/{courseId:guid}")]
+        public async Task<IActionResult> GetCourse(Guid courseId)
         {
             try
             {
-                var result = await _gradeStudentService.GetGradeStudentByIdAsync(id);
+                var result = await _gradeStudentService.GetGradeStudentByCourseIdAsync(courseId);
                 if (result == null)
                 {
                     return NotFound();
@@ -31,7 +32,7 @@ namespace Online_Learning_Management.Presentation.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        // GET: api/GradeStudent
+
         [HttpGet("{id}")]// 
         public async Task<ActionResult<GradeStudents>> GetGradeById(Guid id)
         {
@@ -51,6 +52,42 @@ namespace Online_Learning_Management.Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("student/{studentId:guid}/course/{courseId:guid}")]
+        public async Task<IActionResult> GetStudentCourse(Guid studentId, Guid courseId)
+        {
+            try
+            {
+                var result = await _gradeStudentService.GetGradeStudentByStudentIdAndCourseIdAsync(studentId, courseId);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet("student/{studentId:guid}")]
+        public async Task<IActionResult> GetStudentbyStudent(Guid studentId)
+        {
+            try
+            {
+                var result = await _gradeStudentService.GetGradeStudentByStudentIdAsync(studentId);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        
         [HttpPost]
         public async Task<ActionResult> AddGrade(CreateGradeStudentDTO gradeDto)
         {
