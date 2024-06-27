@@ -13,8 +13,12 @@ namespace Online_Learning_Management.Infrastructure.Repositories
             builder.Property(x => x.CourseID).IsRequired();
             builder.Property(x => x.StudentID).IsRequired();
             builder.Property(x => x.EnrollmentDate).IsRequired().HasDefaultValueSql("GETUTCDATE()");
-            builder.HasOne<Course>().WithMany().HasForeignKey(x => x.CourseID);
-            builder.HasOne<Student>().WithMany().HasForeignKey(x => x.StudentID);
+            builder.HasOne<Course>().WithMany()
+                .HasForeignKey(x => x.CourseID)
+                .OnDelete(DeleteBehavior.Cascade); ;
+            builder.HasOne<Student>().WithMany()
+                .HasForeignKey(x => x.StudentID)
+                .OnDelete(DeleteBehavior.Cascade); ;
         }
     }
 }
