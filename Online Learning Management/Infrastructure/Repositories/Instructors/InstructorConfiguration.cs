@@ -1,13 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Online_Learning_Management.Domain.Entities.Students;
+using Online_Learning_Management.Domain.Entities.Instructors;
 
-namespace Online_Learning_Management.Infrastructure.Repositories.Students
+namespace Online_Learning_Management.Infrastructure.Repositories.Instructors
 {
-    public class StudentConfiguration : IEntityTypeConfiguration<Student>
+    public class InstructorConfiguration : IEntityTypeConfiguration<Instructor>
     {
-        public void Configure(EntityTypeBuilder<Student> builder)
+        public void Configure(EntityTypeBuilder<Instructor> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.UserId);

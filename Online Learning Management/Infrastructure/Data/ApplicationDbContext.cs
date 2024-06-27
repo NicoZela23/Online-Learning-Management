@@ -21,6 +21,8 @@ using Online_Learning_Management.Domain.Entities.ReportCourses;
 using Online_Learning_Management.Infrastructure.Repositories.ReportCourses;
 using Online_Learning_Management.Domain.Entities.TaskStudents;
 using Online_Learning_Management.Infrastructure.Repositories.TaskStudents;
+using Online_Learning_Management.Domain.Entities.Instructors;
+using Online_Learning_Management.Infrastructure.Repositories.Instructors;
 
 namespace Online_Learning_Management.Infrastructure.Data
 {
@@ -40,6 +42,7 @@ namespace Online_Learning_Management.Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<ReportCourse> ReportCourses { get; set; }
         public DbSet<TaskStudent> TaskStudents { get; set; }
+        public DbSet<Instructor> Instructors { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -57,6 +60,7 @@ namespace Online_Learning_Management.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new UserAuthConfiguration());
             modelBuilder.ApplyConfiguration(new ReportCourseConfiguration());
             modelBuilder.ApplyConfiguration(new TaskStudentConfiguration());
+            modelBuilder.ApplyConfiguration(new InstructorConfiguration());
         }
     }
 }

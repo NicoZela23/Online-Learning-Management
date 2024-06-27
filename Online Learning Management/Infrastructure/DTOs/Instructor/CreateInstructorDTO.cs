@@ -1,6 +1,6 @@
-﻿namespace Online_Learning_Management.Domain.Entities.Students
+﻿namespace Online_Learning_Management.Infrastructure.DTOs.Instructor
 {
-    public class Student
+    public class CreateInstructorDTO
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

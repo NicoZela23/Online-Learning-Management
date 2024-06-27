@@ -3,7 +3,12 @@ using Online_Learning_Management.Application.Auth.Validator;
 using Online_Learning_Management.Domain.Entities.Auth;
 using Online_Learning_Management.Domain.Exceptions.Auth;
 using Online_Learning_Management.Domain.Interfaces.Auth;
+using Online_Learning_Management.Domain.Interfaces.Instructors;
+using Online_Learning_Management.Domain.Interfaces.Students;
 using Online_Learning_Management.Infrastructure.DTOs.Auth;
+using Online_Learning_Management.Infrastructure.DTOs.Instructor;
+using Online_Learning_Management.Infrastructure.DTOs.Student;
+using Online_Learning_Management.Infrastructure.Students;
 
 namespace Online_Learning_Management.Application.Auth.Services
 {
@@ -11,10 +16,14 @@ namespace Online_Learning_Management.Application.Auth.Services
     {
         private readonly IUserAuthRepository _userAuthRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserAuthRepository userAuthRepository, IMapper mapper)
+        private readonly IStudentServices _studentServices;
+        private readonly INstructorService _instructorService;
+        public UserService(IUserAuthRepository userAuthRepository, IMapper mapper, IStudentServices studentServices, INstructorService instructorService)
         {
             _userAuthRepository = userAuthRepository;
             _mapper = mapper;
+            _studentServices = studentServices;
+            _instructorService = instructorService;
         }
     
         public async Task <User> AddUserAsync(CreateUserDTO createUserDTO)
@@ -29,6 +38,17 @@ namespace Online_Learning_Management.Application.Auth.Services
             }
             var user = _mapper.Map<User>(createUserDTO);
             var createdUser = await _userAuthRepository.AddUserAsync(user);
+
+            if (createdUser.Role == "Student")
+            {
+                var createdStudent = _mapper.Map<CreateStudentDTO>(createdUser);
+                await _studentServices.AddStudentAsync(createdStudent);
+            }
+            else if (createdUser.Role == "Instructor")
+            {
+                var createdInstructor = _mapper.Map<CreateInstructorDTO>(createdUser);
+                await _instructorService.AddInstructorAsync(createdInstructor);
+            }
             return createdUser;
         }
 
@@ -39,6 +59,15 @@ namespace Online_Learning_Management.Application.Auth.Services
             {
                 throw new ArgumentException();
             }
+            if (user.Role == "Student")
+            {
+                await _studentServices.DeleteStudentAsync(id);
+            }
+            else if (user.Role == "Instructor")
+            {
+                await _instructorService.DeleteInstructorAsync(id);
+            }
+
             await _userAuthRepository.DeleteUserAsync(id);
         }
 
@@ -76,6 +105,31 @@ namespace Online_Learning_Management.Application.Auth.Services
             }
             _mapper.Map(updateUserDTO, existingUser);
             var updatedUser = await _userAuthRepository.UpdateUserAsync(existingUser);
+
+            if(existingUser.Role == "Student") 
+            {
+                var existingStudent = await _studentServices.GetStudentByIdAsync(id);
+                var updatedStudent = _mapper.Map<UpdateStudentDTO>(updateUserDTO);
+
+                if(existingStudent == null)
+                {
+                    throw new ArgumentException();
+                }
+                _mapper.Map(updatedStudent, existingStudent);
+                await _studentServices.UpdateStudentAsync(id, updatedStudent);
+            }
+            else if (existingUser.Role == "Instructor")
+            {
+                var existingInstructor = await _instructorService.GetInstructorByIdAsync(id);
+                var updatedInstructor = _mapper.Map<UpdateInstructorDTO>(updateUserDTO);
+
+                if(existingInstructor == null)
+                {
+                    throw new ArgumentException();
+                }
+                _mapper.Map(updatedInstructor, existingInstructor);
+                await _instructorService.UpdateInstructorAsync(id, updatedInstructor);
+            }
             return updatedUser;
         }
     }

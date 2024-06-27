@@ -33,7 +33,9 @@ using Online_Learning_Management.Application.ReportCourses.Services;
 using Online_Learning_Management.Application.TaskStudent.Services;
 using Online_Learning_Management.Domain.Interfaces.TaskStudents;
 using Online_Learning_Management.Infrastructure.Repositories.TaskStudents;
-
+using Online_Learning_Management.Domain.Interfaces.Instructors;
+using Online_Learning_Management.Infrastructure.Repositories.Instructors;
+using Online_Learning_Management.Application.Instructors.Services;
 
 namespace Online_Learning_Management.Infrastructure.DependencyInjection
 {
@@ -55,8 +57,9 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IReportCourseRepository, ReportCourseRepository>();
           
             services.AddScoped<ITaskStudentRepository, TaskStudentRepository>();
+            services.AddScoped<INstructorRepository, InstructorRepository>();
 
-
+          
             //Register services
             services.AddScoped<IModuleService, ModuleServices>();
             services.AddScoped<IModuleTaskService, ModuleTaskService>();
@@ -70,7 +73,7 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IAuthValidService, AuthService>();
             services.AddScoped<IReportCourseService, ReportCourseService>();
             services.AddScoped<ITaskStudentService, TaskStudentService>();
-
+            services.AddScoped<INstructorService, InstructorService>();
 
             //Register AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
