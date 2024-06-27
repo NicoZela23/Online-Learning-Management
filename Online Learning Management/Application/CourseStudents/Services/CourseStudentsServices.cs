@@ -1,5 +1,6 @@
 
 using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Online_Learning_Management.Application.CourseStudents;
 using Online_Learning_Management.Domain.Entities.CourseStudent;
 using Online_Learning_Management.Domain.Interfaces.CourseStudents;
@@ -58,6 +59,21 @@ public class CourseStudentsService : ICourseStudentsService
 
     public async Task EnrollCourseStudentAsync(EnrollStudentDTO enrollStudentDTO)
     {
+        var courseExists = await _courseStudentsRepository.CourseExistsAsync(enrollStudentDTO.CourseID);
+        var studentExists = await _courseStudentsRepository.StudentExistsAsync(enrollStudentDTO.StudentID);
+        if (!courseExists)
+        {
+            throw new KeyNotFoundException("Course not found or does not exist");
+        }
+        if (!studentExists)
+        {
+            throw new KeyNotFoundException("Student not found or does not exist");
+        }
+        var alreadyEnrolled = await _courseStudentsRepository.GetCourseStudentByStudentAndCourseAsync(enrollStudentDTO.StudentID, enrollStudentDTO.CourseID);
+        if (alreadyEnrolled != null)
+        {
+            throw new InvalidOperationException("The student is already enrolled in the course");
+        }
         var courseStudent = _mapper.Map<CourseStudent>(enrollStudentDTO);
         await _courseStudentsRepository.AddCourseStudentAsync(courseStudent);
     }

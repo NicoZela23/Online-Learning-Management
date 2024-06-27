@@ -9,6 +9,5 @@ namespace Online_Learning_Management.Domain.Interfaces.CourseStudents
         Task DeleteCourseStudentAsync(Guid id);
         Task WithdrawCourseStudentAsync(Guid studentId, Guid courseId);
         Task EnrollCourseStudentAsync(EnrollStudentDTO enrollStudentDTO);
-
     }
 }
