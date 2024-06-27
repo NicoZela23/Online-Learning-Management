@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Online_Learning_Management.Domain.Interfaces.CourseStudents;
 using Online_Learning_Management.Domain.Interfaces.ReportCourses;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
 
     [ApiController]
-    [Route("course/report")]
+    [Route("courses/{courseId}/report")]
     public class ReportCoursesController : Controller
     {
         private readonly IReportCourseService _reportCourseService;
@@ -17,21 +16,26 @@ namespace Online_Learning_Management.Presentation.Controllers
             _reportCourseService = reportCourseService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetReportCourseByIdAsync(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> GetReportCourseByIdAsync(Guid courseId, Guid studentId)
         {
+            if (courseId == Guid.Empty || studentId == Guid.Empty)
+            {
+                return BadRequest(new { message = "Course ID and Student ID must be provided and valid" });
+            }
+
             try
             {
-                var reportCourse = await _reportCourseService.GetReportCourseByIdAsync(id);
+                var reportCourse = await _reportCourseService.GetReportCourseByStudentAndCourseAsync(studentId, courseId);
                 if (reportCourse == null)
                 {
-                    return NotFound(new { message = $"Course with ID {id} not found" });
+                    return NotFound(new { message = $"No progress report found for Student ID {studentId} in Course ID {courseId}" });
                 }
                 return Ok(reportCourse);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while retrieving course", details = ex.Message });
+                return StatusCode(500, new { message = "An error occurred while retrieving the progress report", details = ex.Message });
             }
         }
     }

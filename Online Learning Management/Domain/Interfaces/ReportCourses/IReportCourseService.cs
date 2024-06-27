@@ -4,6 +4,6 @@ namespace Online_Learning_Management.Domain.Interfaces.ReportCourses
 {
     public interface IReportCourseService
     {
-        Task<ReportCourseDTO> GetReportCourseByIdAsync(Guid id);
+        Task<ReportCourseDTO> GetReportCourseByStudentAndCourseAsync(Guid studentId, Guid courseId);
     }
 }

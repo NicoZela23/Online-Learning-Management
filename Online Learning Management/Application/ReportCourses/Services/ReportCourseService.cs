@@ -15,12 +15,12 @@ namespace Online_Learning_Management.Application.ReportCourses.Services
             _mapper = mapper;
         }
 
-        public async Task<ReportCourseDTO> GetReportCourseByIdAsync(Guid id)
+        public async Task<ReportCourseDTO> GetReportCourseByStudentAndCourseAsync(Guid studentId, Guid courseId)
         {
-            var reportCourse = await _reportCourseRepository.GetReportCourseByIdAsync(id);
+            var reportCourse = await _reportCourseRepository.GetReportCourseByStudentAndCourseAsync(studentId, courseId);
             if (reportCourse == null)
             {
-                throw new KeyNotFoundException("Course not found");
+                throw new KeyNotFoundException("Progress report not found for the specified student and course");
             }
             return _mapper.Map<ReportCourseDTO>(reportCourse);
         }
