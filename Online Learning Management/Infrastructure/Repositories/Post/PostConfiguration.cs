@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Online_Learning_Management.Domain.Entities.Post;
+using Online_Learning_Management.Domain.Entities.Forums;
 
 namespace Online_Learning_Management.Infrastructure.Repositories.Post.PostConfiguration
 {
@@ -16,13 +17,23 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Post.PostConfig
                 .HasColumnType("nvarchar(max)");
 
             builder.Property(x => x.CreatedAt)
-                .IsRequired()
+                
                 .HasDefaultValueSql("GETDATE()"); 
 
             builder.Property(x => x.UpdatedAt)
                 .IsRequired(false);
+            
 
-        
+            builder.Property(x => x.ForumId)
+                .IsRequired()
+                .HasDefaultValueSql("NEWID()");
+
+            // // Define relationships
+            // builder.HasOne(p => p.Forum)
+            //     .WithMany(f => f.Id)
+            //     .HasForeignKey(p => p.ForumId)
+            //     .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
+

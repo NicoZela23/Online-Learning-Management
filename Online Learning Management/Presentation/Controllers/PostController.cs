@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-
 using Online_Learning_Management.Infrastructure.DTOs.Post;
 using Online_Learning_Management.Domain.Interfaces.Post;
+using System;
+using System.Threading.Tasks;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
@@ -16,17 +17,25 @@ namespace Online_Learning_Management.Presentation.Controllers
             _postService = postService;
         }
 
-        [HttpPost]//api/posts
+        [HttpPost] //localhost:5000/api/posts
         public async Task<IActionResult> CreatePost([FromBody] CreatePostDTO createPostDTO)
         {
-            await _postService.AddPostAsync(createPostDTO);
-            return Ok();
+            try
+            {
+                await _postService.AddPostAsync(createPostDTO);
+                return Ok(new { message = "Post created successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while creating the post", details = ex.Message });
+            }
         }
 
-        [HttpGet]//api/posts
+        [HttpGet] // api/posts
         public async Task<IActionResult> GetAllPosts()
         {
-            try {
+            try
+            {
                 var posts = await _postService.GetAllPostsAsync();
                 return Ok(posts);
             }
@@ -36,25 +45,49 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]//api/posts/{id}
+        [HttpGet("{id}")] // api/posts/{id}
         public async Task<IActionResult> GetPostById(Guid id)
         {
-            var post = await _postService.GetPostByIdAsync(id);
-            return Ok(post);
+            try
+            {
+                var post = await _postService.GetPostByIdAsync(id);
+                if (post == null)
+                    return NotFound();
+
+                return Ok(post);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while retrieving the post", details = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePost(Guid id, [FromBody] UpdatePostDTO updatePostDTO)
         {
-            await _postService.UpdatePostAsync(id, updatePostDTO);
-            return Ok();
+            try
+            {
+                await _postService.UpdatePostAsync(id, updatePostDTO);
+                return Ok(new { message = "Post updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while updating the post", details = ex.Message });
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(Guid id)
         {
-            await _postService.DeletePostAsync(id);
-            return Ok();
+            try
+            {
+                await _postService.DeletePostAsync(id);
+                return Ok(new { message = "Post deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while deleting the post", details = ex.Message });
+            }
         }
     }
 }

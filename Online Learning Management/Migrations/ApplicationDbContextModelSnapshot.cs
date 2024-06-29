@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Online_Learning_Management.Infrastructure.Data;
 
@@ -12,11 +11,9 @@ using Online_Learning_Management.Infrastructure.Data;
 namespace Online_Learning_Management.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240629160421_AddPost")]
-    partial class AddPost
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

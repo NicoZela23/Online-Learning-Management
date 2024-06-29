@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Online_Learning_Management.Migrations
 {
     /// <inheritdoc />
-    public partial class AddPost : Migration
+    public partial class Post : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
