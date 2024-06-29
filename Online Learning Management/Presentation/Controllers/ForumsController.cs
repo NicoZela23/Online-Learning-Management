@@ -19,7 +19,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             _forumService = forumService;
         }
 
-        [HttpGet]
+        [HttpGet]//Get  localhost:5000/course/forums
         public async Task<ActionResult<IEnumerable<Forum>>> GetAllForums()
         {
             try
