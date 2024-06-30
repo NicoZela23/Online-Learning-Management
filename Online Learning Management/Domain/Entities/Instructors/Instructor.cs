@@ -1,6 +1,6 @@
-﻿namespace Online_Learning_Management.Domain.Entities.Students
+﻿namespace Online_Learning_Management.Domain.Entities.Instructors
 {
-    public class Student
+    public class Instructor
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

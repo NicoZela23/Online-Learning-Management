@@ -27,13 +27,18 @@ using System.Text;
 using Online_Learning_Management.Domain.Interfaces.Auth;
 using Online_Learning_Management.Infrastructure.Repositories.Auth;
 using Online_Learning_Management.Application.Auth.Services;
+using Online_Learning_Management.Domain.Interfaces.ReportCourses;
+using Online_Learning_Management.Infrastructure.Repositories.ReportCourses;
+using Online_Learning_Management.Application.ReportCourses.Services;
 using Online_Learning_Management.Application.TaskStudent.Services;
 using Online_Learning_Management.Domain.Interfaces.TaskStudents;
 using Online_Learning_Management.Infrastructure.Repositories.TaskStudents;
+using Online_Learning_Management.Domain.Interfaces.Instructors;
+using Online_Learning_Management.Infrastructure.Repositories.Instructors;
+using Online_Learning_Management.Application.Instructors.Services;
 using OnlineLearningManagement.Domain.Interfaces;
 using Online_Learning_Management.Infrastructure.Repositories;
 using Online_Learning_Management.Application.Modules.Services.ModuleProgresses;
-
 
 namespace Online_Learning_Management.Infrastructure.DependencyInjection
 {
@@ -52,10 +57,11 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IStudentRepository , StudentRepository>();
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IUserAuthRepository, UserAuthRepository>();
+            services.AddScoped<IReportCourseRepository, ReportCourseRepository>();
             services.AddScoped<ITaskStudentRepository, TaskStudentRepository>();
+            services.AddScoped<INstructorRepository, InstructorRepository>();
             services.AddScoped<IModuleProgressRepository, ModuleProgressesRepository>();
-
-
+          
             //Register services
             services.AddScoped<IModuleService, ModuleServices>();
             services.AddScoped<IModuleTaskService, ModuleTaskService>();
@@ -67,9 +73,10 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IFileService, AzureBlobService>();
             services.AddScoped<IAuthUserService, UserService>();
             services.AddScoped<IAuthValidService, AuthService>();
+            services.AddScoped<IReportCourseService, ReportCourseService>();
             services.AddScoped<ITaskStudentService, TaskStudentService>();
+            services.AddScoped<INstructorService, InstructorService>();
             services.AddScoped<IModuleProgressService, ModuleProgressServices>();
-
 
             //Register AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

@@ -17,10 +17,13 @@ using Online_Learning_Management.Infrastructure.Repositories.Files;
 using Online_Learning_Management.Infrastructure.Repositories;
 using Online_Learning_Management.Domain.Entities.Auth;
 using Online_Learning_Management.Infrastructure.Repositories.Auth;
+using Online_Learning_Management.Domain.Entities.ReportCourses;
+using Online_Learning_Management.Infrastructure.Repositories.ReportCourses;
 using Online_Learning_Management.Domain.Entities.TaskStudents;
 using Online_Learning_Management.Infrastructure.Repositories.TaskStudents;
+using Online_Learning_Management.Domain.Entities.Instructors;
+using Online_Learning_Management.Infrastructure.Repositories.Instructors;
 using Online_Learning_Management.Domain.Entities.ModuleProgresses;
-
 
 namespace Online_Learning_Management.Infrastructure.Data
 {
@@ -38,7 +41,9 @@ namespace Online_Learning_Management.Infrastructure.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<FileMetadata> UploadedFiles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ReportCourse> ReportCourses { get; set; }
         public DbSet<TaskStudent> TaskStudents { get; set; }
+        public DbSet<Instructor> Instructors { get; set; }
         public DbSet<ModuleProgress> ModuleProgresses { get; set; }
 
 
@@ -55,7 +60,9 @@ namespace Online_Learning_Management.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new StudentConfiguration());
             modelBuilder.ApplyConfiguration(new FileConfiguration());
             modelBuilder.ApplyConfiguration(new UserAuthConfiguration());
+            modelBuilder.ApplyConfiguration(new ReportCourseConfiguration());
             modelBuilder.ApplyConfiguration(new TaskStudentConfiguration());
+            modelBuilder.ApplyConfiguration(new InstructorConfiguration());
             modelBuilder.ApplyConfiguration(new ModuleProgressesConfiguration());
         }
     }
