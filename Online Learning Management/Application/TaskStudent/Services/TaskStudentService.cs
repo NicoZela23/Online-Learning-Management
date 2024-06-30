@@ -84,5 +84,45 @@ namespace Online_Learning_Management.Application.TaskStudent.Services
 
             return response;
         }
+
+        public async Task<object> GetAllSubmittedTasksAsync(Guid taskID)
+        {
+            var moduleTask = await _moduleTaskRepository.GetTaskOfModuleByIdAsync(taskID);
+            if (moduleTask == null) throw new Exception("The task does not exist.");
+
+            var uploadedTasks = await _taskStudentRepository.GetAllSubmittedTasksAsync(taskID);
+            var infoTask = await _taskStudentRepository.GetRelationshipDataFromTaaskStudents(taskID);
+
+            var response = new ApiGetAllSubmittedTasksResponse(uploadedTasks, infoTask);
+            return response;
+        }
+
+        public async Task<Object> GetSubmittedTaskByIdAsync(Guid studentTaskId)
+        {
+            var response = await _taskStudentRepository.GetSubmittedTaskByIdAsync(studentTaskId);
+            if (response == null)
+            {
+                throw new ArgumentException("The submit task does not exist.");
+            }
+            return response;
+        }
+
+        public async Task<Object> UpdateTaskStudenAsync(Guid studentTaskId, UpdateTaskStudentDTO taskStudentDTO)
+        {
+            var taskStudent = await _taskStudentRepository.GetSubmittedTaskByIdAsync(studentTaskId);
+            if (taskStudent == null) throw new ArgumentException("The submit task does not exist.");
+
+            var taskStudentUpdate = await _taskStudentRepository.UpdateTaskStudentAsync(studentTaskId, taskStudentDTO);
+            if (taskStudentUpdate == null) throw new ArgumentException("An error occurred while updating the rating");
+
+            var taskStudentData = await _taskStudentRepository.GetSubmittedTaskByIdAsync(taskStudentUpdate.Id);
+
+            var response = new ApiUpdateResponse(
+                "Rating and comment added successfully.",
+                taskStudentData
+            );
+
+            return response;
+        }
     }
 }
