@@ -32,7 +32,7 @@ namespace Online_Learning_Management.Infrastructure.Repositories.GradeStudent
             }
         }
 
-        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByCourseId(int courseId)
+        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByCourseId(Guid courseId)
         {
             return await _context.GradeStudents
                 .Where(x => x.CourseId == courseId)
@@ -44,14 +44,14 @@ namespace Online_Learning_Management.Infrastructure.Repositories.GradeStudent
             return await _context.GradeStudents.FindAsync(id);
         }
 
-        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByStudentId(int studentId)
+        public async Task<IEnumerable<GradeStudents>> GetGradeStudentByStudentId(Guid studentId)
         {
             return await _context.GradeStudents
                 .Where(x => x.StudentId == studentId)
                 .ToListAsync();
         }
 
-        public Task<IEnumerable<GradeStudents>> GetGradeStudentByStudentIdAndCourseId(int studentId, int courseId)
+        public Task<IEnumerable<GradeStudents>> GetGradeStudentByStudentIdAndCourseId(Guid studentId, Guid courseId)
         {
             return Task.FromResult(_context.GradeStudents
                                .Where(x => x.StudentId == studentId && x.CourseId == courseId)
