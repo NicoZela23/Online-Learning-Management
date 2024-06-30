@@ -36,6 +36,9 @@ using Online_Learning_Management.Infrastructure.Repositories.TaskStudents;
 using Online_Learning_Management.Domain.Interfaces.Instructors;
 using Online_Learning_Management.Infrastructure.Repositories.Instructors;
 using Online_Learning_Management.Application.Instructors.Services;
+using OnlineLearningManagement.Domain.Interfaces;
+using Online_Learning_Management.Infrastructure.Repositories;
+using Online_Learning_Management.Application.Modules.Services.ModuleProgresses;
 
 namespace Online_Learning_Management.Infrastructure.DependencyInjection
 {
@@ -55,10 +58,9 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IUserAuthRepository, UserAuthRepository>();
             services.AddScoped<IReportCourseRepository, ReportCourseRepository>();
-          
             services.AddScoped<ITaskStudentRepository, TaskStudentRepository>();
             services.AddScoped<INstructorRepository, InstructorRepository>();
-
+            services.AddScoped<IModuleProgressRepository, ModuleProgressesRepository>();
           
             //Register services
             services.AddScoped<IModuleService, ModuleServices>();
@@ -74,6 +76,7 @@ namespace Online_Learning_Management.Infrastructure.DependencyInjection
             services.AddScoped<IReportCourseService, ReportCourseService>();
             services.AddScoped<ITaskStudentService, TaskStudentService>();
             services.AddScoped<INstructorService, InstructorService>();
+            services.AddScoped<IModuleProgressService, ModuleProgressServices>();
 
             //Register AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
