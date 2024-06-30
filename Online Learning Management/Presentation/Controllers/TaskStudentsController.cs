@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Application.Files.Responses;
 using Online_Learning_Management.Application.TaskStudent.helpers;
 using Online_Learning_Management.Application.TaskStudent.Responses;
+using Online_Learning_Management.Domain.Entities.Students;
 using Online_Learning_Management.Domain.Interfaces.Files;
 using Online_Learning_Management.Domain.Interfaces.TaskStudents;
+using Online_Learning_Management.Infrastructure.DTOs.TaskStudent;
 using System.Threading.Tasks;
 
 namespace Online_Learning_Management.Presentation.Controllers
@@ -21,7 +24,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             _fileService = fileService;
         }
 
-        [HttpPost("{taskID}/students/{studentID}")]
+        [HttpPost("{taskID}/students/{studentID}/submit")]
         public async Task<ActionResult> UploadTask(Guid taskID, Guid studentID, IFormFile file)
         {
             try
@@ -43,6 +46,51 @@ namespace Online_Learning_Management.Presentation.Controllers
 
                 var response = new ApiResponse("Task uploaded successfully", taskUpload, structureResponse);
 
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{taskID}/submittedTasks")]
+        public async Task<ActionResult<IEnumerable<Object>>> GetAllSubmittedTasks(Guid taskID)
+        {
+            try
+            {
+                var response = await _taskStudentService.GetAllSubmittedTasksAsync(taskID);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("submittedTasks/{studentTaskId}")]
+        public async Task<ActionResult> GetSubmittedTasksById(Guid studentTaskId)
+        {
+            try
+            {
+                var response = await _taskStudentService.GetSubmittedTaskByIdAsync(studentTaskId);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("submittedTasks/{studentTaskId}")]
+        public async Task<ActionResult> UpdateSubmittedTask(
+            Guid studentTaskId, 
+            [FromBody] UpdateTaskStudentDTO taskStudentDto
+        )
+        {
+            try
+            {
+                var response = await _taskStudentService.UpdateTaskStudenAsync(studentTaskId, taskStudentDto);
                 return Ok(response);
             }
             catch (Exception ex)
