@@ -23,6 +23,7 @@ namespace Online_Learning_Management.Application.Post.Services
         public async Task AddPostAsync(CreatePostDTO createPostDTO)
         {
             var post = _mapper.Map<Posts>(createPostDTO);
+              post.CreatedAt = DateTime.UtcNow;
             await _postRepository.AddPostAsync(post);
         }
 

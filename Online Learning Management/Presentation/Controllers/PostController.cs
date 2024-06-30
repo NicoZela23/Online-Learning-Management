@@ -17,9 +17,12 @@ namespace Online_Learning_Management.Presentation.Controllers
             _postService = postService;
         }
 
-        [HttpPost] //localhost:5000/api/posts
+        [HttpPost]
         public async Task<IActionResult> CreatePost([FromBody] CreatePostDTO createPostDTO)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
                 await _postService.AddPostAsync(createPostDTO);
@@ -31,7 +34,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet] // api/posts
+        [HttpGet]
         public async Task<IActionResult> GetAllPosts()
         {
             try
@@ -45,14 +48,17 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")] // api/posts/{id}
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetPostById(Guid id)
         {
+            if (id == Guid.Empty)
+                return BadRequest("Invalid post ID.");
+
             try
             {
                 var post = await _postService.GetPostByIdAsync(id);
                 if (post == null)
-                    return NotFound();
+                    return NotFound(new { message = "Post not found" });
 
                 return Ok(post);
             }
@@ -62,9 +68,15 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}")]// api/posts/{id}
         public async Task<IActionResult> UpdatePost(Guid id, [FromBody] UpdatePostDTO updatePostDTO)
         {
+            if (id == Guid.Empty)
+                return BadRequest("Invalid post ID.");
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
                 await _postService.UpdatePostAsync(id, updatePostDTO);
@@ -79,6 +91,9 @@ namespace Online_Learning_Management.Presentation.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(Guid id)
         {
+            if (id == Guid.Empty)
+                return BadRequest("Invalid post ID.");
+
             try
             {
                 await _postService.DeletePostAsync(id);
