@@ -23,16 +23,16 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build Online\ Learning\ Management.sln --configuration Release --output ./output
 
       - name: Publish artifact for deployment
-        run: dotnet publish -c Release -o myapp
+        run: dotnet publish Online\ Learning\ Management.sln -c Release -o ./output
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: myapp
+          path: ./output
 
   test:
     runs-on: windows-latest
@@ -51,10 +51,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
-          path: ./myapp
+          path: ./output
 
       - name: Run tests with dotnet
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test Online\ Learning\ Management.sln --no-build --verbosity normal
 
   deploy:
     runs-on: windows-latest
@@ -70,7 +70,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
-          path: ./myapp
+          path: ./output
       
       - name: Login to Azure
         uses: azure/login@v1
@@ -85,6 +85,7 @@ jobs:
         with:
           app-name: 'learmanage-develop'
           slot-name: 'Production'
-          package: ./myapp
+          package: ./output
+
 
           
