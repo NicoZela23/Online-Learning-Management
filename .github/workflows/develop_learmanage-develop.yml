@@ -54,16 +54,12 @@ jobs:
     - name: Run tests with dotnet
       run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"
       
-    - name: Test Report
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-      uses: dorny/test-reporter@v1
+    - name: Publish test results
       if: always()
+      uses: actions/upload-artifact@v2
       with:
-        name: DotNET Tests
+        name: test-results
         path: '**/test_results.trx'
-        reporter: dotnet-trx
-        fail-on-error: true
         
   deploy:
     runs-on: windows-latest
