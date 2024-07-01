@@ -25,17 +25,18 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      - name: Publish artifact for deployment
+        run: dotnet publish -c Release -o myapp
 
-      - name: Upload artifact for deployment job
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: build-artifacts
+          path: myapp
 
   test:
     runs-on: windows-latest
+    needs: build
 
     steps:
       - uses: actions/checkout@v4
@@ -46,8 +47,11 @@ jobs:
           dotnet-version: '8.x'
           include-prerelease: true
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./myapp
 
       - name: Run tests with dotnet
         run: dotnet test --no-build --verbosity normal
@@ -59,13 +63,14 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: .net-app
+          name: build-artifacts
+          path: ./myapp
       
       - name: Login to Azure
         uses: azure/login@v1
@@ -80,5 +85,6 @@ jobs:
         with:
           app-name: 'learmanage-develop'
           slot-name: 'Production'
-          package: .
+          package: ./myapp
+
           
