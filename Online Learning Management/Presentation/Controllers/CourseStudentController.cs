@@ -55,20 +55,16 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCourseStudentAsync(Guid id)
+  
+            public async Task<IActionResult> DeleteCourseStudentAsync(Guid id)
         {
-            try
+           var courseStudent = await _courseStudentsService.GetCourseStudentByIdAsync(id);
+            if (courseStudent == null)
             {
-                await _courseStudentsService.DeleteCourseStudentAsync(id);
-                return NoContent(new { message = "Course student has been deleted" });
+                return NotFound(new { message = $"Course student with ID {id} not found" });
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred while deleting course student", details = ex.Message });
-            }
-        }
-
-        // new method to withdraw a student from a course
+            await _courseStudentsService.DeleteCourseStudentAsync(id);
+                return Ok(new { message = "CourseStudent was deleted succesfully" });        }
 
         [HttpPost("withdraw")] // POST api/coursestudent/withdraw
         public async Task<IActionResult> WithdrawCourseStudentAsync([FromBody] WithdrawCourseStudentRequest request)
