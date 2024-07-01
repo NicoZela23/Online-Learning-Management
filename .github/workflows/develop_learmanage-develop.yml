@@ -62,6 +62,8 @@ jobs:
         path: '**/test_results.trx'
 
     - name: Test Report
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
       uses: dorny/test-reporter@v1
       if: always()
       with:
@@ -69,7 +71,7 @@ jobs:
         path: '**/test_results.trx'
         reporter: dotnet-trx
         fail-on-error: true
-
+        
   deploy:
     runs-on: windows-latest
     needs: build
