@@ -20,20 +20,20 @@ public class CourseStudentsService : ICourseStudentsService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<CourseStudentDTO>> GetAllCourseStudentsAsync()
+    public async Task<IEnumerable<CourseStudent>> GetAllCourseStudentsAsync()
     {
         var courseStudents = await _courseStudentsRepository.GetAllCourseStudentsAsync();
-        return _mapper.Map<IEnumerable<CourseStudentDTO>>(courseStudents);
+        return _mapper.Map<IEnumerable<CourseStudent>>(courseStudents);
     }
 
-    public async Task<CourseStudentDTO> GetCourseStudentByIdAsync(Guid id)
+    public async Task<CourseStudent> GetCourseStudentByIdAsync(Guid id)
     {
         var courseStudent = await _courseStudentsRepository.GetCourseStudentByIdAsync(id);
         if (courseStudent == null)
         {
             throw new KeyNotFoundException("CourseStudent not found");
         }
-        return _mapper.Map<CourseStudentDTO>(courseStudent);
+        return _mapper.Map<CourseStudent>(courseStudent);
     }
 
     public async Task DeleteCourseStudentAsync(Guid id)
@@ -45,6 +45,9 @@ public class CourseStudentsService : ICourseStudentsService
         }
         await _courseStudentsRepository.DeleteCourseStudentAsync(id);
     }
+
+
+
 
     public async Task WithdrawCourseStudentAsync(Guid studentId, Guid courseId)
     {
