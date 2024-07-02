@@ -19,11 +19,11 @@ namespace Online_Learning_Management.Presentation.Controllers
             _moduleService = moduleService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Module>>> GetAllModules()
+        public async Task<ActionResult<IEnumerable<Module>>> GetAllModules([FromQuery] string search = null)
         {
             try
             {
-                var modules = await _moduleService.GetAllModulesAsync();
+                var modules = await _moduleService.GetAllModulesAsync(search);
                 return Ok(modules);
             }
             catch (Exception ex)
