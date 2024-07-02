@@ -56,7 +56,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 var createdModule = await _moduleService.AddModuleAsync(moduleDto);
-                var response = new ApiResponse("User created successfully", createdModule);
+                var response = new ApiResponse("Module created successfully", createdModule);
                 return Ok(response);
             }
             catch (Exception ex)
