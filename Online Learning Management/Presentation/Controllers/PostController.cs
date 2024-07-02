@@ -99,10 +99,11 @@ namespace Online_Learning_Management.Presentation.Controllers
                 await _postService.DeletePostAsync(id);
                 return Ok(new { message = "Post deleted successfully" });
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return StatusCode(500, new { message = "An error occurred while deleting the post", details = ex.Message });
+                return NotFound(ex.Message);
             }
+            
         }
     }
 }
