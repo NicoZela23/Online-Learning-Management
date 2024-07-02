@@ -3,6 +3,7 @@ using Online_Learning_Management.Domain.Interfaces.CourseStudents;
 using Online_Learning_Management.Infrastructure.DTOs.CourseStudents;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Online_Learning_Management.Presentation.Controllers
@@ -53,18 +54,25 @@ namespace Online_Learning_Management.Presentation.Controllers
                 return StatusCode(500, new { message = "An error occurred while retrieving course student", details = ex.Message });
             }
         }
-
-        [HttpDelete("{id}")]
-  
-            public async Task<IActionResult> DeleteCourseStudentAsync(Guid id)
+        [HttpDelete("{id}")]     
+           public async Task<IActionResult> DeleteCourseStudentAsync(Guid id)
         {
-           var courseStudent = await _courseStudentsService.GetCourseStudentByIdAsync(id);
-            if (courseStudent == null)
+
+              try
             {
-                return NotFound(new { message = $"Course student with ID {id} not found" });
+                await _courseStudentsService.DeleteCourseStudentAsync(id);
+                //return NoContent();
+                return Ok(new { message = "Course student has been deleted" });
+               
             }
-            await _courseStudentsService.DeleteCourseStudentAsync(id);
-                return Ok(new { message = "CourseStudent was deleted succesfully" });        }
+            catch (KeyNotFoundException ex)
+            {
+            return NotFound(new { message = ex.Message });
+            }
+          
+         
+   
+        }
 
         [HttpPost("withdraw")] // POST api/coursestudent/withdraw
         public async Task<IActionResult> WithdrawCourseStudentAsync([FromBody] WithdrawCourseStudentRequest request)
@@ -72,16 +80,13 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _courseStudentsService.WithdrawCourseStudentAsync(request.StudentId, request.CourseId);
-                return NoContent(new { message = "Student has been withdrawn from the course" });
+                return Ok(new { message = "Student has been withdrawn from the course" });
             }
             catch (KeyNotFoundException ex)
             {
                 return NotFound(new { message = ex.Message });
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred while withdrawing from the course", details = ex.Message });
-            }
+          
         }
 
         [HttpPost]
@@ -106,10 +111,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        private IActionResult NoContent(object value)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
 

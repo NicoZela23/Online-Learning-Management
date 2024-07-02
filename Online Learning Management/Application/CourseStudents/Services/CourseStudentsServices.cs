@@ -46,9 +46,6 @@ public class CourseStudentsService : ICourseStudentsService
         await _courseStudentsRepository.DeleteCourseStudentAsync(id);
     }
 
-
-
-
     public async Task WithdrawCourseStudentAsync(Guid studentId, Guid courseId)
     {
         var courseStudent = await _courseStudentsRepository.GetCourseStudentByStudentAndCourseAsync(studentId, courseId);
