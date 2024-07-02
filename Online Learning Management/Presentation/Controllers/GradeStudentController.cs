@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Messaging;
+using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Entities.GradeStudents;
 using Online_Learning_Management.Domain.Interfaces.GradeStudent;
 using Online_Learning_Management.Infrastructure.DTOs.GradeStudent;
@@ -33,7 +34,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]// 
+        [HttpGet("{id}")]// /
         public async Task<ActionResult<GradeStudents>> GetGradeById(Guid id)
         {
             try
@@ -115,13 +116,17 @@ namespace Online_Learning_Management.Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}")]// localhost:5000/api/grade/{id}
         public async Task<ActionResult> DeleteGrade(Guid id)
         {
             try
             {
                 await _gradeStudentService.DeleteGradeAsync(id);
-                return Ok();
+                return Ok(new {Message="Grade Deleted Successfully"});
+            }
+            catch(ArgumentException ex)
+            {
+                return NotFound(new { message = ex.Message });
             }
             catch (Exception ex)
             {
