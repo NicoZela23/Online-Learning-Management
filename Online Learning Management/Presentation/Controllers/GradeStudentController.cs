@@ -34,7 +34,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]// /
+        [HttpGet("{id}")]//
         public async Task<ActionResult<GradeStudents>> GetGradeById(Guid id)
         {
             try
@@ -116,7 +116,7 @@ namespace Online_Learning_Management.Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("{id}")]// localhost:5000/api/grade/{id}
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteGrade(Guid id)
         {
             try
@@ -126,7 +126,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
             catch(ArgumentException ex)
             {
-                return NotFound(new { message = ex.Message });
+                return NotFound(new { message =ex.Message });
             }
             catch (Exception ex)
             {
