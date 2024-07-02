@@ -4,8 +4,8 @@ public interface ICourseRepository
 {
     Task<Course> CreateCourseAsync(Course course);
     Task<Course> GetCourseByIdAsync(Guid Id);
-    Task<IEnumerable<Course>> GetCoursesByIdInstructorAsync(int IdInstructor);
-    Task<bool> InstructorExistsAsync(int idInstructor);
+    Task<IEnumerable<Course>> GetCoursesByIdInstructorAsync(Guid IdInstructor);
+    Task<bool> InstructorExistsAsync(Guid idInstructor);
     Task<Course> UpdateCourseAsync(Course course);
     Task DeleteCourseAsync(Guid courseId);
 }

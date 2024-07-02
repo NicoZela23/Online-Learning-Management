@@ -30,14 +30,14 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Courses
             return await _context.Courses.FindAsync(Id);
         }
 
-        public async Task<IEnumerable<Course>> GetCoursesByIdInstructorAsync(int IdInstructor)
+        public async Task<IEnumerable<Course>> GetCoursesByIdInstructorAsync(Guid IdInstructor)
         {
             return await _context.Courses
                                  .Where(course => course.IdInstructor == IdInstructor)
                                  .ToListAsync();
         }
 
-        public async Task<bool> InstructorExistsAsync(int idInstructor)
+        public async Task<bool> InstructorExistsAsync(Guid idInstructor)
         {
             return await _context.Courses.AnyAsync(Course => Course.IdInstructor == idInstructor);
         }

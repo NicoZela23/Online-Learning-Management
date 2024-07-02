@@ -30,7 +30,7 @@ public class CourseService : ICourseService
         return _mapper.Map<Course>(course);
     }
 
-    public async Task<IEnumerable<Course>> GetCoursesByIdInstructorAsync(int IdInstructor)
+    public async Task<IEnumerable<Course>> GetCoursesByIdInstructorAsync(Guid IdInstructor)
     {
         var courses = await _courseRepository.GetCoursesByIdInstructorAsync(IdInstructor);
         return _mapper.Map<IEnumerable<Course>>(courses);

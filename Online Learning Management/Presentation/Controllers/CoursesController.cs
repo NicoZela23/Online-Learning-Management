@@ -80,7 +80,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("/instructors/{IdInstructor}/courses")]
-        public async Task<IActionResult> GetCoursesByIdInstructor(int IdInstructor)
+        public async Task<IActionResult> GetCoursesByIdInstructor(Guid IdInstructor)
         {
             try
             {

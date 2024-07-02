@@ -8,8 +8,7 @@ public class UpdateCourseDTO
     public string Description { get; set; }
 
     [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "IdInstructor must be greater than 0")]
-    public int IdInstructor { get; set; }
+    public Guid IdInstructor { get; set; }
 
     [Required]
     public List<string> Content { get; set; }
