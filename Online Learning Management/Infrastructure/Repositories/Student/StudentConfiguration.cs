@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Online_Learning_Management.Domain.Entities.Auth;
 using Online_Learning_Management.Domain.Entities.Students;
 
 namespace Online_Learning_Management.Infrastructure.Repositories.Students
@@ -28,6 +29,11 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Students
                 .IsRequired();
 
             builder.HasIndex(x => x.Email).IsUnique();
+
+            builder.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
