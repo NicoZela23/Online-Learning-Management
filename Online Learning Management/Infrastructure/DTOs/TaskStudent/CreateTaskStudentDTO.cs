@@ -2,8 +2,8 @@
 {
     public class CreateTaskStudentDTO
     {
-        public Guid? ModuleTaskID { get; set; }
-        public Guid? StudentID { get; set; }
-        public Guid? FileID { get; set; }
+        public Guid ModuleTaskID { get; set; }
+        public Guid StudentID { get; set; }
+        public Guid FileID { get; set; }
     }
 }

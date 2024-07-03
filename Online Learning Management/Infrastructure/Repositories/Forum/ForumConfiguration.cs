@@ -18,6 +18,11 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Forum
             builder.Property(x => x.Description)
                 .IsRequired()
                 .HasColumnType("nvarchar(max)");
+
+            builder.HasOne(f => f.Course)
+                .WithMany(c => c.Forums)
+                .HasForeignKey(f => f.CourseID)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
