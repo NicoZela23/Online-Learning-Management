@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Interfaces.CourseStudents;
 using Online_Learning_Management.Infrastructure.DTOs.CourseStudents;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Online_Learning_Management.Presentation.Controllers
@@ -38,6 +38,8 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Instructor")]
+
         public async Task<IActionResult> GetCourseStudentByIdAsync(Guid id)
         {
             try
@@ -54,39 +56,37 @@ namespace Online_Learning_Management.Presentation.Controllers
                 return StatusCode(500, new { message = "An error occurred while retrieving course student", details = ex.Message });
             }
         }
-        [HttpDelete("{id}")]     
-           public async Task<IActionResult> DeleteCourseStudentAsync(Guid id)
-        {
 
-              try
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Instructor")]
+            public async Task<IActionResult> DeleteCourseStudentAsync(Guid id)
+        {
+           var courseStudent = await _courseStudentsService.GetCourseStudentByIdAsync(id);
+            if (courseStudent == null)
             {
-                await _courseStudentsService.DeleteCourseStudentAsync(id);
-                //return NoContent();
-                return Ok(new { message = "Course student has been deleted" });
-               
+                return NotFound(new { message = $"Course student with ID {id} not found" });
             }
-            catch (KeyNotFoundException ex)
-            {
-            return NotFound(new { message = ex.Message });
-            }
-          
-         
-   
-        }
+            await _courseStudentsService.DeleteCourseStudentAsync(id);
+                return Ok(new { message = "CourseStudent was deleted succesfully" });        }
 
         [HttpPost("withdraw")] // POST api/coursestudent/withdraw
+        [Authorize(Roles = "Student")]
+
         public async Task<IActionResult> WithdrawCourseStudentAsync([FromBody] WithdrawCourseStudentRequest request)
         {
             try
             {
                 await _courseStudentsService.WithdrawCourseStudentAsync(request.StudentId, request.CourseId);
-                return Ok(new { message = "Student has been withdrawn from the course" });
+                return NoContent(new { message = "Student has been withdrawn from the course" });
             }
             catch (KeyNotFoundException ex)
             {
                 return NotFound(new { message = ex.Message });
             }
-          
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while withdrawing from the course", details = ex.Message });
+            }
         }
 
         [HttpPost]
@@ -111,13 +111,11 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-       
+        private IActionResult NoContent(object value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
 
-public class WithdrawCourseStudentRequest
-{
-    public Guid StudentId { get; set; }
-    public Guid CourseId { get; set; }
-}
