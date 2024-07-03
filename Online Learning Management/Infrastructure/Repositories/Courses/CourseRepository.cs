@@ -16,6 +16,11 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Courses
             _context = context;
         }
 
+        public async Task<IEnumerable<Course>> GetAllCoursesAsync()
+        {
+            return await _context.Courses.ToListAsync();
+        }
+
         public async Task<Course> CreateCourseAsync(Course course)
         {
             course.Id = Guid.NewGuid();
@@ -39,7 +44,7 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Courses
 
         public async Task<bool> InstructorExistsAsync(Guid idInstructor)
         {
-            return await _context.Courses.AnyAsync(Course => Course.IdInstructor == idInstructor);
+            return await _context.Instructors.AnyAsync(i => i.Id == idInstructor);
         }
 
         public async Task<Course> UpdateCourseAsync(Course course)

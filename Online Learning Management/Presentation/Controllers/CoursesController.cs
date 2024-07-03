@@ -19,6 +19,20 @@ namespace Online_Learning_Management.Presentation.Controllers
             _courseService = courseService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllCourses()
+        {
+            try
+            {
+                var courses = await _courseService.GetAllCoursesAsync();
+                return Ok(courses);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateCourse(CreateCourseDTO courseDto)
         {
@@ -77,21 +91,6 @@ namespace Online_Learning_Management.Presentation.Controllers
 
             await _courseService.DeleteCourseAsync(courseId);
             return Ok(new { message = "Course was deleted succesfully" });
-        }
-
-        [HttpGet("/instructors/{IdInstructor}/courses")]
-        public async Task<IActionResult> GetCoursesByIdInstructor(Guid IdInstructor)
-        {
-            try
-            {
-                var courses = await _courseService.GetCoursesByIdInstructorAsync(IdInstructor);
-                return Ok(courses);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-
         }
 
     }

@@ -9,7 +9,6 @@ namespace Online_Learning_Management.Domain.Entities.Courses
         public required string Description { get; set; }
         public Guid IdInstructor { get; set; }
         public List<string> Content { get; set; }
-        public int DurationInWeeks { get; set; }  // Duration of the course in weeks between 1 and 10
-
+        public int DurationInWeeks { get; set; }  
     }
 }

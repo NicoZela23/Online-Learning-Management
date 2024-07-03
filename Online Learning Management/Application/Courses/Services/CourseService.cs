@@ -1,5 +1,6 @@
 using AutoMapper;
 using Online_Learning_Management.Domain.Entities.Courses;
+using OnlineLearningManagement.Application.Courses.Validator;
 
 public class CourseService : ICourseService
 {
@@ -14,8 +15,28 @@ public class CourseService : ICourseService
         _mapper = mapper;
     }
 
+    public async Task<IEnumerable<Course>> GetAllCoursesAsync()
+    {
+        var courses = await _courseRepository.GetAllCoursesAsync();
+        return _mapper.Map<IEnumerable<Course>>(courses);
+    }
+
     public async Task<Course> CreateCourseAsync(CreateCourseDTO courseDto)
     {
+        var validator = new CreateCourseValidator();
+        var validationResult = await validator.ValidateAsync(courseDto);
+
+        if (!validationResult.IsValid)
+        {
+            var errorMessages = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+            throw new ArgumentException(errorMessages);
+        }
+
+        if (!await _courseRepository.InstructorExistsAsync(courseDto.IdInstructor))
+        {
+            throw new KeyNotFoundException($"Instructor with Id {courseDto.IdInstructor} not found or does not exist");
+        }
+
         var course = _mapper.Map<Course>(courseDto);
         return await _courseRepository.CreateCourseAsync(course);
     }
@@ -30,20 +51,24 @@ public class CourseService : ICourseService
         return _mapper.Map<Course>(course);
     }
 
-    public async Task<IEnumerable<Course>> GetCoursesByIdInstructorAsync(Guid IdInstructor)
-    {
-        var courses = await _courseRepository.GetCoursesByIdInstructorAsync(IdInstructor);
-        return _mapper.Map<IEnumerable<Course>>(courses);
-    }
-
-
     public async Task<Course> UpdateCourseAsync(Guid courseId, UpdateCourseDTO courseDto)
     {
         var course = await _courseRepository.GetCourseByIdAsync(courseId);
+
         if (course == null)
         {
             throw new KeyNotFoundException("Course not found");
         }
+
+        var validator = new UpdateCourseValidator();
+        var validationResult = await validator.ValidateAsync(courseDto);
+
+        if (!validationResult.IsValid)
+        {
+            var errorMessages = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+            throw new ArgumentException(errorMessages);
+        }
+
         bool instructorExists = await _courseRepository.InstructorExistsAsync(courseDto.IdInstructor);
         if (!instructorExists)
         {
