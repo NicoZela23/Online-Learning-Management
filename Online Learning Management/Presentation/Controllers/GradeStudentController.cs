@@ -94,7 +94,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _gradeStudentService.AddGradeAsync(gradeDto);
-                return StatusCode(201);
+                return StatusCode(201, "Grade successfully added.");
             }
             catch (Exception ex)
             {
@@ -108,7 +108,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _gradeStudentService.UpdateGradeAsync(id ,gradeDto);
-                return Ok();
+                return Ok("Grade successfully updated.");
             }
             catch (Exception ex)
             {

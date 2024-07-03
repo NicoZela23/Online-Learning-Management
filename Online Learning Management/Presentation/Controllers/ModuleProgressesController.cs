@@ -51,7 +51,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 var createdModuleProgress = await _moduleProgressServices.AddModuleProgressAsync(createModuleProgressDTO);
-                return CreatedAtAction(nameof(GetModuleProgressById), new { id = createdModuleProgress.Id }, createdModuleProgress);
+                return CreatedAtAction(nameof(GetModuleProgressById), new { id = createdModuleProgress.Id }, new { message = "Module progress successfully added.", data = createdModuleProgress });
             }
             catch (ArgumentException ex)
             {
@@ -65,7 +65,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 var updatedModuleProgress = await _moduleProgressServices.UpdateModuleProgressAsync(id, updateModuleProgressDTO);
-                return Ok(updatedModuleProgress);
+                return Ok(new { message = "Module progress successfully updated.", data = updatedModuleProgress });
             }
             catch (ModuleProgressNotFoundException ex)
             {
@@ -83,7 +83,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 var updatedModuleProgress = await _moduleProgressServices.PatchModuleProgressAsync(id, progress);
-                return Ok(updatedModuleProgress);
+                return Ok(new { message = "Module progress successfully patched.", data = updatedModuleProgress });
             }
             catch (ModuleProgressNotFoundException ex)
             {
