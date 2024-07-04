@@ -60,7 +60,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _forumService.AddForumAsync(forumDto);
-                return StatusCode(201);
+                return StatusCode(201, "Forum successfully added.");
             }
             catch (Exception ex)
             {
@@ -75,7 +75,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _forumService.UpdateForumAsync(id, forumDto);
-                return Ok();
+                return Ok("Forum successfully updated.");
             }
             catch (ArgumentException)
             {

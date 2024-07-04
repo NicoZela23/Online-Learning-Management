@@ -39,11 +39,11 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 var course = await _courseService.CreateCourseAsync(courseDto);
-                return CreatedAtAction(nameof(GetCourseById), new { Id = course.Id }, course);
+                return CreatedAtAction(nameof(GetCourseById), new { Id = course.Id }, new { message = "Course created successfully." });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = "Failed to create course.", ex.Message });
             }
         }
 
@@ -67,15 +67,15 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 var updatedCourse = await _courseService.UpdateCourseAsync(courseId, courseDto);
-                return Ok(updatedCourse);
+                return Ok(new { message = "Course updated successfully.", updatedCourse });
             }
             catch (KeyNotFoundException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(new { message = "Course not found." });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { message = "Failed to update course.", ex.Message });
             }
         }
 
