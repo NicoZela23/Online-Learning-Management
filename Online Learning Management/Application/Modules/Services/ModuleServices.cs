@@ -47,9 +47,18 @@ namespace Online_Learning_Management.Application.Modules.Services
             await _moduleRepository.DeleteModuleAsync(id);
         }
 
-        public async Task<IEnumerable<Module>>GetAllModulesAsync()
+        public async Task<IEnumerable<Module>>GetAllModulesAsync(string search)
         {
-            var modules = await _moduleRepository.GetAllModulesAsync();
+            IEnumerable<Module> modules;
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                modules = await _moduleRepository.GetAllModulesAsync(search);
+            } else
+            {
+                modules = await _moduleRepository.GetAllModulesAsync();
+            }
+           
             return _mapper.Map<IEnumerable<Module>>(modules);
         }
 
