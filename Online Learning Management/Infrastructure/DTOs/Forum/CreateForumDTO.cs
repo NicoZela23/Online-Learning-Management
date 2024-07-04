@@ -7,7 +7,7 @@ namespace Online_Learning_Management.Infrastructure.DTOs.Forum
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public string? CourseID { get; set; }
+        public Guid CourseID { get; set; }
         [Required]
         public string? Title { get; set; }
         [Required]

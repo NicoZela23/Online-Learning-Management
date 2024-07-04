@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Online_Learning_Management.Domain.Entities.Courses;
 using Online_Learning_Management.Domain.Entities.ReportCourses;
+using Online_Learning_Management.Domain.Entities.Students;
 
 namespace Online_Learning_Management.Infrastructure.Repositories.ReportCourses
 {
@@ -16,6 +18,17 @@ namespace Online_Learning_Management.Infrastructure.Repositories.ReportCourses
             builder.Property(x => x.ProgressPercentage).IsRequired().HasDefaultValue(0.0);
 
             builder.HasIndex(x => new { x.StudentID, x.CourseID }).IsUnique();
+
+            builder.HasOne<Course>()
+                   .WithMany()
+                   .HasForeignKey(mp => mp.CourseID)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.HasOne<Student>()
+                     .WithMany()
+                     .HasForeignKey(mp => mp.StudentID)
+                     .OnDelete(DeleteBehavior.Cascade); ;
         }
     }
 }

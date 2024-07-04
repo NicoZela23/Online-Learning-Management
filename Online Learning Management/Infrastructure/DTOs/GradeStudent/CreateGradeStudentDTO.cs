@@ -12,9 +12,9 @@ namespace Online_Learning_Management.Infrastructure.DTOs.GradeStudent
         [Key]
         public Guid Id { get; set; }
         [Required]
-        public Guid? StudentId { get; set; }
+        public Guid StudentId { get; set; }
         [Required]
-        public Guid? CourseId { get; set; }
+        public Guid CourseId { get; set; }
         [Required]
         public decimal? Score { get; set; }
         [Required]

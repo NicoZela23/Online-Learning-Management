@@ -11,6 +11,6 @@ namespace Online_Learning_Management.Domain.Entities.Post
         public DateTime? UpdatedAt { get; set; }
 
         // Navigation property
-        public Forum? Forum { get; set; }
+        public Forum Forum { get; set; }
     }
 }

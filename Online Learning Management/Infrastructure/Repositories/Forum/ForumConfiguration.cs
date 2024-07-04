@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Online_Learning_Management.Domain.Entities.Courses;
+
 //using Online_Learning_Management.Domain.Entities.Forums.Forum;
 using ForumEntity = Online_Learning_Management.Domain.Entities.Forums.Forum; // Alias para evitar conflictos
 
@@ -18,6 +20,16 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Forum
             builder.Property(x => x.Description)
                 .IsRequired()
                 .HasColumnType("nvarchar(max)");
+
+            builder.HasOne(f => f.Course)
+                .WithMany(c => c.Forums)
+                .HasForeignKey(f => f.CourseID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne<Course>()
+                .WithMany()
+                .HasForeignKey(f => f.CourseID)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Online_Learning_Management.Infrastructure.DTOs.Module
     public class CreateModuleDTO
     {
         public Guid Id { get; set; }
-        public Guid? CourseID { get; set; }
+        public Guid CourseID { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
         public TimeSpan Duration { get; set; }
