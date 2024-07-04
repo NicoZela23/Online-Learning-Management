@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Online_Learning_Management.Domain.Entities.Courses;
 using Online_Learning_Management.Domain.Entities.Instructors;
 using Online_Learning_Management.Domain.Interfaces.Instructors;
 using Online_Learning_Management.Infrastructure.Data;
@@ -12,7 +13,7 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Instructors
         {
             _context = context;
         }
-        public async Task<Instructor> GetInstructorByIdAsync (Guid id)
+        public async Task<Instructor> GetInstructorByIdAsync(Guid id)
         {
             return await _context.Instructors.FindAsync(id);
         }
@@ -41,6 +42,13 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Instructors
                 _context.Instructors.Remove(instructor);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<Course>> GetCoursesByInstructorIdAsync(Guid id)
+        {
+            return await _context.Courses
+                              .Where(course => course.IdInstructor == id)
+                              .ToListAsync();
         }
     }
 }

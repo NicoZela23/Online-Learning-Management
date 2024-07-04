@@ -1,4 +1,5 @@
-﻿using Online_Learning_Management.Domain.Entities.Instructors;
+﻿using Online_Learning_Management.Domain.Entities.Courses;
+using Online_Learning_Management.Domain.Entities.Instructors;
 
 namespace Online_Learning_Management.Domain.Interfaces.Instructors
 {
@@ -9,5 +10,6 @@ namespace Online_Learning_Management.Domain.Interfaces.Instructors
         Task<Instructor> AddInstructorAsync(Instructor instructor);
         Task UpdateInstructorAsync(Instructor instructor);
         Task DeleteInstructorAsync(Guid id);
+        Task <IEnumerable<Course>> GetCoursesByInstructorIdAsync(Guid id);
     }
 }
