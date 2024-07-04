@@ -4,6 +4,7 @@ using Online_Learning_Management.Domain.Entities;
 using Online_Learning_Management.Domain.Interfaces;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
@@ -20,11 +21,11 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCourses()
+        public async Task<IActionResult> GetAllCourses([FromQuery] string search = null)
         {
             try
             {
-                var courses = await _courseService.GetAllCoursesAsync();
+                var courses = await _courseService.GetAllCoursesAsync(search);
                 return Ok(courses);
             }
             catch (Exception ex)
@@ -33,6 +34,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
+        [Authorize(Roles = "Instructor")]
         [HttpPost]
         public async Task<IActionResult> CreateCourse(CreateCourseDTO courseDto)
         {
@@ -62,6 +64,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPut("{courseId}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> UpdateCourse(Guid courseId, UpdateCourseDTO courseDto)
         {
             try
@@ -79,8 +82,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-
         [HttpDelete("{courseId}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> Delete(Guid courseId)
         {
             var course = await _courseService.GetCourseByIdAsync(courseId);

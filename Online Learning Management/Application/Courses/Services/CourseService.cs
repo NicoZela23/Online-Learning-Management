@@ -15,9 +15,19 @@ public class CourseService : ICourseService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<Course>> GetAllCoursesAsync()
+    public async Task<IEnumerable<Course>> GetAllCoursesAsync(string search)
     {
-        var courses = await _courseRepository.GetAllCoursesAsync();
+        IEnumerable<Course> courses;
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            courses = await _courseRepository.GetAllCoursesAsync(search);
+        }
+        else
+        {
+            courses = await _courseRepository.GetAllCoursesAsync();
+        }
+
         return _mapper.Map<IEnumerable<Course>>(courses);
     }
 
