@@ -29,7 +29,6 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Courses
             return course;
         }
 
-
         public async Task<Course> GetCourseByIdAsync(Guid Id)
         {
             return await _context.Courses.FindAsync(Id);
@@ -62,6 +61,13 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Courses
                 _context.Courses.Remove(course);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<Course>> GetAllCoursesAsync(string search)
+        {
+            return await _context.Courses
+                                .Where(course => course.Title.Contains(search) || course.Description.Contains(search) || course.Content.Any(content => content.Contains(search)))
+                                .ToListAsync();
         }
     }
 }
