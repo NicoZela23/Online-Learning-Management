@@ -94,7 +94,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _forumService.DeleteForumAsync(id);
-                return NoContent();
+                 return Ok(new { message = "Forum was deleted succesfully" });
             }
             catch (ArgumentException)
             {

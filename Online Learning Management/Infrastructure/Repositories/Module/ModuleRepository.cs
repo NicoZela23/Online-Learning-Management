@@ -46,5 +46,12 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Modules
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<Module>> GetAllModulesAsync(string search)
+        {
+            return await _context.Modules
+                         .Where(m => m.Name.Contains(search) || m.Description.Contains(search))
+                         .ToListAsync();
+        }
     }
 }

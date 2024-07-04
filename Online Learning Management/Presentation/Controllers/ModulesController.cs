@@ -19,11 +19,11 @@ namespace Online_Learning_Management.Presentation.Controllers
             _moduleService = moduleService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Module>>> GetAllModules()
+        public async Task<ActionResult<IEnumerable<Module>>> GetAllModules([FromQuery] string search = null)
         {
             try
             {
-                var modules = await _moduleService.GetAllModulesAsync();
+                var modules = await _moduleService.GetAllModulesAsync(search);
                 return Ok(modules);
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 var createdModule = await _moduleService.AddModuleAsync(moduleDto);
-                var response = new ApiResponse("User created successfully", createdModule);
+                var response = new ApiResponse("Module created successfully", createdModule);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -90,12 +90,16 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _moduleService.DeleteModuleAsync(id);
-                return NoContent();
+                //return NoContent();
+                return Ok(new { message = "Module deleted successfully" });
+               
             }
             catch (ModuleNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
         }
+
+       
     }
 }

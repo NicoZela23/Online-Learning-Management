@@ -52,7 +52,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             { 
                 await _fileService.DeleteFileDataAsync(id);
-                return NoContent();
+                //return NoContent();
+                return Ok(new {message ="File deleted successfully"}) ;
             }
             catch (ArgumentException)
             {
