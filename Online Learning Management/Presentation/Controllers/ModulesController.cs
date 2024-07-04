@@ -90,12 +90,16 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _moduleService.DeleteModuleAsync(id);
-                return NoContent();
+                //return NoContent();
+                return Ok(new { message = "Module deleted successfully" });
+               
             }
             catch (ModuleNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
         }
+
+       
     }
 }
