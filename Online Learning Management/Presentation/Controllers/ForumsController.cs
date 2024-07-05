@@ -8,7 +8,7 @@ using Online_Learning_Management.Infrastructure.DTOs.Forum;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
-    [Route("course/forums")]
+    [Route("api/courses/forums")]
     [ApiController]
     public class ForumsController : ControllerBase
     {
