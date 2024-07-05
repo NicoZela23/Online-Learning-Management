@@ -65,7 +65,6 @@ namespace OLM_Tests.Repository.Students
         [Fact]
         public async Task GetAllStudentsAsync_ShouldReturnAllStudents()
         {
-            // Arrange
             var context = GetDbContext();
             var repository = new StudentRepository(context);
             var students = new List<Student>

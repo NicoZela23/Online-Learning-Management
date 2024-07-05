@@ -44,13 +44,22 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '8.x'
-          include-prerelease: true
+
+      - name: Restore dependencies
+        run: dotnet restore
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Debug
 
       - name: Run tests with dotnet
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"
+
+      - name: Publish test results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: '**/test_results.trx'
         
   deploy:
     runs-on: windows-latest

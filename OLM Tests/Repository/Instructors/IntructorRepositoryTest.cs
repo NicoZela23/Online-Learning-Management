@@ -2,11 +2,6 @@
 using Online_Learning_Management.Domain.Entities.Instructors;
 using Online_Learning_Management.Infrastructure.Data;
 using Online_Learning_Management.Infrastructure.Repositories.Instructors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OLM_Tests.Repository.Instructors
 {

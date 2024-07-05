@@ -1,16 +1,8 @@
-﻿using Castle.Core.Configuration;
-using Microsoft.Extensions.Configuration;
-using Moq;
+﻿using Moq;
 using Online_Learning_Management.Application.Auth.Services;
 using Online_Learning_Management.Domain.Entities.Auth;
 using Online_Learning_Management.Domain.Exceptions.Auth;
 using Online_Learning_Management.Domain.Interfaces.Auth;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OLM_Tests.Services.Auth
 {

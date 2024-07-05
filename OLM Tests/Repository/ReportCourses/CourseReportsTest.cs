@@ -1,14 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Online_Learning_Management.Domain.Entities.Post;
 using Online_Learning_Management.Domain.Entities.ReportCourses;
 using Online_Learning_Management.Infrastructure.Data;
-using Online_Learning_Management.Infrastructure.Repositories.Post;
 using Online_Learning_Management.Infrastructure.Repositories.ReportCourses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OLM_Tests.Repository.ReportCourses
 {
