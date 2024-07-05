@@ -5,7 +5,7 @@ using Online_Learning_Management.Infrastructure.DTOs.GradeStudent;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
-    [Route("couse/grade")]
+    [Route("api/couses/grade")]
     [ApiController]
     public class GradeStudentController : ControllerBase
     {
