@@ -87,15 +87,11 @@ namespace Online_Learning_Management.Presentation.Controllers
             try
             {
                 await _courseStudentsService.WithdrawCourseStudentAsync(request.StudentId, request.CourseId);
-                return NoContent(new { message = "Student has been withdrawn from the course" });
+                return Ok(new { message = "Student has been withdrawn from the course" });
             }
             catch (KeyNotFoundException ex)
             {
                 return NotFound(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred while withdrawing from the course", details = ex.Message });
             }
         }
 
