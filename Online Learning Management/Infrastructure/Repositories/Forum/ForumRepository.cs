@@ -2,6 +2,7 @@
 using Online_Learning_Management.Domain.Interfaces.Forums;
 using Online_Learning_Management.Infrastructure.Data;
 using Online_Learning_Management.Domain.Entities.Forums;
+using Online_Learning_Management.Domain.Entities.Courses;
 
 namespace Online_Learning_Management.Infrastructure.Repositories.Forum
 {
@@ -15,7 +16,7 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Forum
         }
 
         public async Task AddForumAsync(Domain.Entities.Forums.Forum forum)
-        {
+        {         
             await _context.Forums.AddAsync(forum);
             await _context.SaveChangesAsync();
         }

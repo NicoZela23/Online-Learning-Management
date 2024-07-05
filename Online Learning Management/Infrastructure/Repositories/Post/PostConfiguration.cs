@@ -29,11 +29,12 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Post.PostConfig
                 .HasDefaultValueSql("NEWID()");
 
             // // Define relationships
+            /*
             builder.HasOne(p => p.Forum)
                  .WithMany(f => f.Posts)
                  .HasForeignKey(p => p.ForumId)
                  .OnDelete(DeleteBehavior.Cascade);
-
+            */
             
         }
     }
