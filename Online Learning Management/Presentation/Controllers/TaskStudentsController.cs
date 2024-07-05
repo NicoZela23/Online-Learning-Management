@@ -57,7 +57,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{taskID}/submittedTasks")]
-        [Authorize(Roles = "Student")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Object>>> GetAllSubmittedTasks(Guid taskID)
         {
             try
@@ -72,7 +72,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("submittedTasks/{studentTaskId}")]
-        [Authorize(Roles = "Student")]
+        [Authorize]
         public async Task<ActionResult> GetSubmittedTasksById(Guid studentTaskId)
         {
             try
@@ -87,7 +87,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPut("submittedTasks/{studentTaskId}")]
-        [Authorize(Roles = "Student")]
+        [Authorize]
         public async Task<ActionResult> UpdateSubmittedTask(
             Guid studentTaskId, 
             [FromBody] UpdateTaskStudentDTO taskStudentDto
