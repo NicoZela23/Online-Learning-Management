@@ -3,7 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online Learning Management", "Online Learning Management\Online Learning Management.csproj", "{0125DA00-F827-4AD6-BBCF-C40408BBD88D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Online Learning Management", "Online Learning Management\Online Learning Management.csproj", "{0125DA00-F827-4AD6-BBCF-C40408BBD88D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OLM Tests", "OLM Tests\OLM Tests.csproj", "{F904E942-9894-4A43-B51E-BF33C1D04237}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5989C117-848C-4712-9296-D1BBB515A88B}"
+	ProjectSection(SolutionItems) = preProject
+		coverlet.runsettings = coverlet.runsettings
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +22,10 @@ Global
 		{0125DA00-F827-4AD6-BBCF-C40408BBD88D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0125DA00-F827-4AD6-BBCF-C40408BBD88D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0125DA00-F827-4AD6-BBCF-C40408BBD88D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F904E942-9894-4A43-B51E-BF33C1D04237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F904E942-9894-4A43-B51E-BF33C1D04237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F904E942-9894-4A43-B51E-BF33C1D04237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F904E942-9894-4A43-B51E-BF33C1D04237}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
