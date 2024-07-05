@@ -35,7 +35,8 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Post
 
         public async Task<IEnumerable<Posts>> GetAllPostsAsync()
         {
-            return await _context.Posts.ToListAsync();
+            var data = await _context.Posts.ToListAsync();
+            return data;
         }
 
         public async Task<Posts> GetPostByIdAsync(Guid id)

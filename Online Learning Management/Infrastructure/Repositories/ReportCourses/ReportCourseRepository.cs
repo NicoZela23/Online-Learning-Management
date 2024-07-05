@@ -2,6 +2,7 @@
 using Online_Learning_Management.Domain.Entities.ReportCourses;
 using Online_Learning_Management.Domain.Interfaces.ReportCourses;
 using Online_Learning_Management.Infrastructure.Data;
+using System.Threading.Tasks;
 
 namespace Online_Learning_Management.Infrastructure.Repositories.ReportCourses
 {
@@ -13,11 +14,23 @@ namespace Online_Learning_Management.Infrastructure.Repositories.ReportCourses
         {
             _context = context;
         }
-        public async Task<ReportCourse> GetReportCourseByStudentAndCourseAsync(Guid studentId, Guid courseId)
+        public async Task<Object> GetReportCourseByStudentAndCourseAsync(
+            Guid studentId, Guid courseId
+        )
         {
-            return await _context.ReportCourses
-                                 .Where(rc => rc.StudentID == studentId && rc.CourseID == courseId)
-                                 .FirstOrDefaultAsync();
+            var result = await (from g in _context.GradeStudents
+                                join s in _context.Students on g.StudentId equals s.Id
+                                join c in _context.Courses on g.CourseId equals c.Id
+                                where g.StudentId == studentId && g.CourseId == courseId
+                                select new
+                                {
+                                    Id = g.Id,
+                                    NameStudent = s.Name,
+                                    TitleCourse = c.Title,
+                                    Score = g.Score
+                                }).FirstOrDefaultAsync();
+            return result;
+
         }
     }
 }
