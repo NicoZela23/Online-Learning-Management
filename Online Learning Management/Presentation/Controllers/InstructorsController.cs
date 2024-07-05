@@ -44,5 +44,23 @@ namespace Online_Learning_Management.Presentation.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("{id}/courses")]
+        public async Task<IActionResult> GetCoursesByIdInstructor(Guid id)
+        {
+            try
+            {
+                var courses = await _instructorService.GetCoursesByIdInstructorAsync(id);
+                return Ok(courses);
+            }
+            catch (InstructorNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
