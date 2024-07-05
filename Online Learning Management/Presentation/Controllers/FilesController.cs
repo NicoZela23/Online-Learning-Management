@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Application.Files.Responses;
 using Online_Learning_Management.Domain.Entities.Files;
@@ -16,6 +17,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             _fileService = fileService;
         }
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<FileMetadata>>> GetAllFilesData()
         {
             try
@@ -30,6 +32,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<FileMetadata>> GetFileDataById(Guid id)
         {
             try
@@ -47,6 +50,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteFileMetadata(Guid id)
         {
             try
@@ -61,6 +65,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> UploadFile(IFormFile file)
         {
             try

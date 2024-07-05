@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Exceptions.Auth;
 using Online_Learning_Management.Domain.Interfaces.Students;
 
@@ -16,6 +17,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetStudentById(Guid id)
         {
             try
@@ -35,6 +37,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllStudents()
         {
             try

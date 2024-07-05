@@ -3,6 +3,7 @@ using Online_Learning_Management.Infrastructure.DTOs.Post;
 using Online_Learning_Management.Domain.Interfaces.Post;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
@@ -18,6 +19,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreatePost([FromBody] CreatePostDTO createPostDTO)
         {
             if (!ModelState.IsValid)
@@ -35,6 +37,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllPosts()
         {
             try
@@ -49,6 +52,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetPostById(Guid id)
         {
             if (id == Guid.Empty)
@@ -69,6 +73,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPut("{id}")]// api/posts/{id}
+        [Authorize]
         public async Task<IActionResult> UpdatePost(Guid id, [FromBody] UpdatePostDTO updatePostDTO)
         {
             if (id == Guid.Empty)
@@ -89,6 +94,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeletePost(Guid id)
         {
             if (id == Guid.Empty)

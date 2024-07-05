@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Exceptions.ModuleProgress;
 using Online_Learning_Management.Infrastructure.DTOs.ModuleProgresses;
@@ -18,6 +19,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> GetAllModuleProgresses()
         {
             try
@@ -32,6 +34,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetModuleProgressById(Guid id)
         {
             try
@@ -46,6 +49,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> AddModuleProgress(CreateModuleProgressDTO createModuleProgressDTO)
         {
             try
@@ -60,6 +64,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> UpdateModuleProgress(Guid id, UpdateModuleProgressDTO updateModuleProgressDTO)
         {
             try
@@ -78,6 +83,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> PatchModuleProgress(Guid id, PatchModuleProgressDTO progress)
         {
             try
@@ -96,6 +102,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> DeleteModuleProgress(Guid id)
         {
             try

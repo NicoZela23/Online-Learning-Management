@@ -19,6 +19,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             _moduleService = moduleService;
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Module>>> GetAllModules([FromQuery] string search = null)
         {
             try
@@ -33,7 +34,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Instructor")]
+        [Authorize]
         public async Task<ActionResult<Module>> GetModuleById(Guid id)
         {
             try
@@ -51,6 +52,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
         [HttpPost]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult> AddModule(CreateModuleDTO moduleDto)
         {
             try
@@ -66,6 +68,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult> UpdateModule(Guid id, [FromBody] UpdateModuleDTO moduleDto)
         {
             try
@@ -85,6 +88,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult> DeleteModule(Guid id)
         {
             try

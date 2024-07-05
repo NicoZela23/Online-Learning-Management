@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Application.ModuleTasks.Responses;
 using Online_Learning_Management.Domain.Entities.ModuleTasks;
 using Online_Learning_Management.Domain.Interfaces.ModuleTasks;
@@ -19,6 +20,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{moduleID}/tasks")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ModuleTask>>> GetAllTasksModule(Guid moduleID)
         {
             try
@@ -33,6 +35,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("tasks/{taskID}")]
+        [Authorize]
         public async Task<ActionResult<ModuleTask>> GetTaskOfModuleById(Guid taskID)
         {
             try
@@ -53,6 +56,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPost("tasks")]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult> AddTaskToModule(CreateModuleTaskDTO moduleTaskDto)
         {
             try
@@ -72,6 +76,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPut("tasks/{taskID}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult> UpdateTaskOfModule(
             Guid taskID, 
             [FromBody] UpdateModuleTaskDTO moduleTaskDto)
@@ -97,6 +102,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpDelete("tasks/{taskID}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult> DeleteTaskOfModule(Guid taskID)
         {
             try

@@ -20,6 +20,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> GetAllCourseStudentsAsync()
         {
             try
@@ -80,7 +81,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPost("withdraw")] // POST api/coursestudent/withdraw
-        [Authorize(Roles = "Student")]
+        [Authorize]
 
         public async Task<IActionResult> WithdrawCourseStudentAsync([FromBody] WithdrawCourseStudentRequest request)
         {
@@ -96,6 +97,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> EnrollStudent(EnrollStudentDTO enrollStudentDTO)
         {
             try

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Interfaces.ReportCourses;
 
@@ -17,6 +18,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetReportCourseByIdAsync(Guid courseId, Guid studentId)
         {
             if (courseId == Guid.Empty || studentId == Guid.Empty)

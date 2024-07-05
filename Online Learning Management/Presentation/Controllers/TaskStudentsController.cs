@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Application.Files.Responses;
 using Online_Learning_Management.Application.TaskStudent.helpers;
@@ -25,6 +26,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPost("{taskID}/students/{studentID}/submit")]
+        [Authorize(Roles = "Student")]
         public async Task<ActionResult> UploadTask(Guid taskID, Guid studentID, IFormFile file)
         {
             try
@@ -55,6 +57,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{taskID}/submittedTasks")]
+        [Authorize(Roles = "Student")]
         public async Task<ActionResult<IEnumerable<Object>>> GetAllSubmittedTasks(Guid taskID)
         {
             try
@@ -69,6 +72,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("submittedTasks/{studentTaskId}")]
+        [Authorize(Roles = "Student")]
         public async Task<ActionResult> GetSubmittedTasksById(Guid studentTaskId)
         {
             try
@@ -83,6 +87,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPut("submittedTasks/{studentTaskId}")]
+        [Authorize(Roles = "Student")]
         public async Task<ActionResult> UpdateSubmittedTask(
             Guid studentTaskId, 
             [FromBody] UpdateTaskStudentDTO taskStudentDto
