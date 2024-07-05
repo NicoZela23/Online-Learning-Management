@@ -40,7 +40,8 @@ namespace Online_Learning_Management.Application.Post.Services
         public async Task<IEnumerable<Posts>> GetAllPostsAsync()
         {
             var posts = await _postRepository.GetAllPostsAsync();
-            return _mapper.Map<IEnumerable<Posts>>(posts);
+            var data =  _mapper.Map<IEnumerable<Posts>>(posts);
+            return data;
         }
 
         public async Task<Posts> GetPostByIdAsync(Guid id)

@@ -21,7 +21,7 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Forum
                 .IsRequired()
                 .HasColumnType("nvarchar(max)");
 
-            builder.HasOne(f => f.Course)
+           /* builder.HasOne(f => f.Course)
                 .WithMany(c => c.Forums)
                 .HasForeignKey(f => f.CourseID)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -30,6 +30,7 @@ namespace Online_Learning_Management.Infrastructure.Repositories.Forum
                 .WithMany()
                 .HasForeignKey(f => f.CourseID)
                 .OnDelete(DeleteBehavior.Cascade);
+           */
         }
     }
 }
