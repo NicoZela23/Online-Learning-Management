@@ -8,7 +8,7 @@ using OnlineLearningManagement.Domain.Interfaces;
 namespace Online_Learning_Management.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/module-progresses")]
+    [Route("api/module/progress")]
     public class ModuleProgressesController : ControllerBase
     {
         private readonly IModuleProgressService _moduleProgressServices;
@@ -33,7 +33,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("students/{id}")]
         [Authorize]
         public async Task<IActionResult> GetModuleProgressById(Guid id)
         {
@@ -58,25 +58,6 @@ namespace Online_Learning_Management.Presentation.Controllers
                 return CreatedAtAction(nameof(GetModuleProgressById), new { id = createdModuleProgress.Id }, new { message = "Module progress successfully added.", data = createdModuleProgress });
             }
             catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Instructor")]
-        public async Task<IActionResult> UpdateModuleProgress(Guid id, UpdateModuleProgressDTO updateModuleProgressDTO)
-        {
-            try
-            {
-                var updatedModuleProgress = await _moduleProgressServices.UpdateModuleProgressAsync(id, updateModuleProgressDTO);
-                return Ok(new { message = "Module progress successfully updated.", data = updatedModuleProgress });
-            }
-            catch (ModuleProgressNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
