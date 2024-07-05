@@ -3,11 +3,12 @@ using Online_Learning_Management.Infrastructure.DTOs.Post;
 using Online_Learning_Management.Domain.Interfaces.Post;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/posts")]
+    [Route("api/forums")]
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;
@@ -17,7 +18,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             _postService = postService;
         }
 
-        [HttpPost]
+        [HttpPost("{ForumID}/posts")]
+        [Authorize]
         public async Task<IActionResult> CreatePost([FromBody] CreatePostDTO createPostDTO)
         {
             if (!ModelState.IsValid)
@@ -34,7 +36,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("{ForumID}/posts")]
+        [Authorize]
         public async Task<IActionResult> GetAllPosts()
         {
             try
@@ -48,7 +51,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{ForumID}/posts/{id}")]
+        [Authorize]
         public async Task<IActionResult> GetPostById(Guid id)
         {
             if (id == Guid.Empty)
@@ -68,7 +72,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpPut("{id}")]// api/posts/{id}
+        [HttpPut("{ForumID}/posts/{id}")]// api/posts/{id}
+        [Authorize]
         public async Task<IActionResult> UpdatePost(Guid id, [FromBody] UpdatePostDTO updatePostDTO)
         {
             if (id == Guid.Empty)
@@ -88,7 +93,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{ForumID}/posts/{id}")]
+        [Authorize]
         public async Task<IActionResult> DeletePost(Guid id)
         {
             if (id == Guid.Empty)

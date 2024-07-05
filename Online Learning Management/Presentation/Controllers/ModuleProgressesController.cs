@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Exceptions.ModuleProgress;
 using Online_Learning_Management.Infrastructure.DTOs.ModuleProgresses;
@@ -7,7 +8,7 @@ using OnlineLearningManagement.Domain.Interfaces;
 namespace Online_Learning_Management.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/module-progresses")]
+    [Route("api/module/progress")]
     public class ModuleProgressesController : ControllerBase
     {
         private readonly IModuleProgressService _moduleProgressServices;
@@ -18,6 +19,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> GetAllModuleProgresses()
         {
             try
@@ -31,7 +33,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("students/{id}")]
+        [Authorize]
         public async Task<IActionResult> GetModuleProgressById(Guid id)
         {
             try
@@ -46,6 +49,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> AddModuleProgress(CreateModuleProgressDTO createModuleProgressDTO)
         {
             try
@@ -59,25 +63,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateModuleProgress(Guid id, UpdateModuleProgressDTO updateModuleProgressDTO)
-        {
-            try
-            {
-                var updatedModuleProgress = await _moduleProgressServices.UpdateModuleProgressAsync(id, updateModuleProgressDTO);
-                return Ok(new { message = "Module progress successfully updated.", data = updatedModuleProgress });
-            }
-            catch (ModuleProgressNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpPatch("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> PatchModuleProgress(Guid id, PatchModuleProgressDTO progress)
         {
             try
@@ -96,6 +83,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> DeleteModuleProgress(Guid id)
         {
             try

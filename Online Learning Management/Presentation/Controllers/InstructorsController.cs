@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Exceptions.Auth;
 using Online_Learning_Management.Domain.Interfaces.Instructors;
 
@@ -15,6 +16,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             _instructorService = instructorService;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllInstructors()
         {
             try
@@ -28,6 +30,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetInstructorById(Guid id)
         {
             try
@@ -46,6 +49,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{id}/courses")]
+        [Authorize]
         public async Task<IActionResult> GetCoursesByIdInstructor(Guid id)
         {
             try

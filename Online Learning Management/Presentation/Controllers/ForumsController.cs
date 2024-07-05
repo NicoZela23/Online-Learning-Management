@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Application.Modules.Services;
 using Online_Learning_Management.Domain.Entities.Forums;
 using Online_Learning_Management.Domain.Interfaces.Forums;
@@ -20,6 +21,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet]//Get  localhost:5000/course/forums
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Forum>>> GetAllForums()
         {
             try
@@ -34,6 +36,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Forum>> GetForumById(Guid id)
         {
             try
@@ -55,6 +58,7 @@ namespace Online_Learning_Management.Presentation.Controllers
 
         
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> AddForum(CreateForumDTO forumDto)
         {
             try
@@ -70,6 +74,7 @@ namespace Online_Learning_Management.Presentation.Controllers
 
         
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> UpdateForum(Guid id, [FromBody] UpdateForumDTO forumDto)
         {
             try
@@ -89,6 +94,7 @@ namespace Online_Learning_Management.Presentation.Controllers
 
         
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteForum(Guid id)
         {
             try

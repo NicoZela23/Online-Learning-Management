@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Online_Learning_Management.Domain.Entities.GradeStudents;
 using Online_Learning_Management.Domain.Interfaces.GradeStudent;
 using Online_Learning_Management.Infrastructure.DTOs.GradeStudent;
 
 namespace Online_Learning_Management.Presentation.Controllers
 {
-    [Route("api/couses/grade")]
+    [Route("api/courses/")]
     [ApiController]
     public class GradeStudentController : ControllerBase
     {
@@ -15,7 +16,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             _gradeStudentService = gradeStudentService;
         }
 
-        [HttpGet("course/{courseId:guid}")]
+        [HttpGet("{courseId:guid}/grades")]
+        [Authorize]
         public async Task<IActionResult> GetCourse(Guid courseId)
         {
             try
@@ -33,7 +35,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("{id}")]// 
+        [HttpGet("grades/{id}")]
+        [Authorize]
         public async Task<ActionResult<GradeStudents>> GetGradeById(Guid id)
         {
             try
@@ -53,7 +56,8 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
-        [HttpGet("student/{studentId:guid}/course/{courseId:guid}")]
+        [HttpGet("{courseId:guid}/students/{studentId:guid}/grades")]
+        [Authorize]
         public async Task<IActionResult> GetStudentCourse(Guid studentId, Guid courseId)
         {
             try
@@ -70,7 +74,8 @@ namespace Online_Learning_Management.Presentation.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpGet("student/{studentId:guid}")]
+        [HttpGet("grades/students/{studentId:guid}")]
+        [Authorize]
         public async Task<IActionResult> GetStudentbyStudent(Guid studentId)
         {
             try
@@ -89,6 +94,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
         
         [HttpPost]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult> AddGrade(CreateGradeStudentDTO gradeDto)
         {
             try
@@ -103,6 +109,7 @@ namespace Online_Learning_Management.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult> UpdateGrade(Guid id, [FromBody] UpdateGradeStudentDTO gradeDto)
         {
             try
@@ -116,6 +123,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Instructor")]
         public async Task<ActionResult> DeleteGrade(Guid id)
         {
             try

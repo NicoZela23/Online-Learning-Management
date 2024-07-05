@@ -20,6 +20,7 @@ namespace Online_Learning_Management.Presentation.Controllers
             _courseService = courseService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllCourses([FromQuery] string search = null)
         {
@@ -49,7 +50,9 @@ namespace Online_Learning_Management.Presentation.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("{Id}")]
+        
         public async Task<IActionResult> GetCourseById(Guid Id)
         {
             try
