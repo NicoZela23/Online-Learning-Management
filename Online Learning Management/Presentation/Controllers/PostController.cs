@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Online_Learning_Management.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/posts")]
     public class PostsController : ControllerBase
     {
         private readonly IPostService _postService;

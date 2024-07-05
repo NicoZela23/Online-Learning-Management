@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Online_Learning_Management.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/courseStudents")]
     public class CourseStudentController : ControllerBase
     {
         private readonly ICourseStudentsService _courseStudentsService;
