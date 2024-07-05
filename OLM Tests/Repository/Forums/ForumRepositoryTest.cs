@@ -2,11 +2,6 @@
 using Online_Learning_Management.Domain.Entities.Forums;
 using Online_Learning_Management.Infrastructure.Data;
 using Online_Learning_Management.Infrastructure.Repositories.Forum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OLM_Tests.Repository.Forums
 {
@@ -24,7 +19,7 @@ namespace OLM_Tests.Repository.Forums
             return new Forum
             {
                 Id = Guid.NewGuid(),
-                CourseID = "3123123-3dc1 3d-d123-d13d-s",
+                CourseID = Guid.NewGuid(),
                 Title = "Test Forum",
                 Description = "Test Description",
                 

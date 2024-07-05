@@ -6,11 +6,6 @@ using Online_Learning_Management.Domain.Entities.Modules;
 using Online_Learning_Management.Domain.Entities.Students;
 using Online_Learning_Management.Infrastructure.Data;
 using Online_Learning_Management.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OLM_Tests.Repository.ProgressModule
 {
@@ -138,7 +133,7 @@ namespace OLM_Tests.Repository.ProgressModule
             {
                 Id = courseId,
                 Title = "TestTitle",
-                IdInstructor = 23,
+                IdInstructor = Guid.NewGuid(),
                 Description = "TestDescription",
                 Content = new List<string> { "Content1", "Content2" },
                 DurationInWeeks = 12

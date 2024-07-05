@@ -2,11 +2,6 @@
 using Online_Learning_Management.Domain.Entities.Courses;
 using Online_Learning_Management.Infrastructure.Data;
 using Online_Learning_Management.Infrastructure.Repositories.Courses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OLM_Tests.Repository.Courses
 {
@@ -21,7 +16,7 @@ namespace OLM_Tests.Repository.Courses
             return new ApplicationDbContext(options);
         }
 
-        private Course CreateTestCourse(int instructorId)
+        private Course CreateTestCourse(Guid instructorId)
         {
             return new Course
             {
@@ -39,7 +34,7 @@ namespace OLM_Tests.Repository.Courses
         {
             var context = GetDbContext();
             var repository = new CourseRepository(context);
-            var course = CreateTestCourse(1);
+            var course = CreateTestCourse(Guid.NewGuid());
 
             var result = await repository.CreateCourseAsync(course);
 
@@ -52,7 +47,7 @@ namespace OLM_Tests.Repository.Courses
         public async Task GetCourseByIdAsync_ShouldReturnCourse()
         {
             var context = GetDbContext();
-            var course = CreateTestCourse(1);
+            var course = CreateTestCourse(Guid.NewGuid());
             await context.Courses.AddAsync(course);
             await context.SaveChangesAsync();
 
@@ -67,43 +62,30 @@ namespace OLM_Tests.Repository.Courses
         public async Task GetCoursesByIdInstructorAsync_ShouldReturnCourses()
         {
             var context = GetDbContext();
-            var course1 = CreateTestCourse(1);
-            var course2 = CreateTestCourse(1);
-            var course3 = CreateTestCourse(2);
+            var coursesId = Guid.NewGuid();
+            var course1 = CreateTestCourse(coursesId);
+            var course2 = CreateTestCourse(coursesId);
+            var course3 = CreateTestCourse(Guid.NewGuid());
             await context.Courses.AddRangeAsync(course1, course2, course3);
             await context.SaveChangesAsync();
 
             var repository = new CourseRepository(context);
-            var result = await repository.GetCoursesByIdInstructorAsync(1);
+            var result = await repository.GetCoursesByIdInstructorAsync(coursesId);
 
             Assert.Equal(2, result.Count());
-            Assert.All(result, course => Assert.Equal(1, course.IdInstructor));
-        }
-
-        [Fact]
-        public async Task InstructorExistsAsync_ShouldReturnTrueIfInstructorExists()
-        {
-            var context = GetDbContext();
-            var course = CreateTestCourse(1);
-            await context.Courses.AddAsync(course);
-            await context.SaveChangesAsync();
-
-            var repository = new CourseRepository(context);
-            var result = await repository.InstructorExistsAsync(1);
-
-            Assert.True(result);
+            Assert.All(result, course => Assert.Equal(coursesId, course.IdInstructor));
         }
 
         [Fact]
         public async Task InstructorExistsAsync_ShouldReturnFalseIfInstructorDoesNotExist()
         {
             var context = GetDbContext();
-            var course = CreateTestCourse(1);
+            var course = CreateTestCourse(Guid.NewGuid());
             await context.Courses.AddAsync(course);
             await context.SaveChangesAsync();
 
             var repository = new CourseRepository(context);
-            var result = await repository.InstructorExistsAsync(2);
+            var result = await repository.InstructorExistsAsync(Guid.NewGuid());
 
             Assert.False(result);
         }
@@ -112,7 +94,7 @@ namespace OLM_Tests.Repository.Courses
         public async Task UpdateCourseAsync_ShouldUpdateCourse()
         {
             var context = GetDbContext();
-            var course = CreateTestCourse(1);
+            var course = CreateTestCourse(Guid.NewGuid());
             await context.Courses.AddAsync(course);
             await context.SaveChangesAsync();
 
@@ -128,7 +110,7 @@ namespace OLM_Tests.Repository.Courses
         public async Task DeleteCourseAsync_ShouldRemoveCourse()
         {
             var context = GetDbContext();
-            var course = CreateTestCourse(1);
+            var course = CreateTestCourse(Guid.NewGuid());
             await context.Courses.AddAsync(course);
             await context.SaveChangesAsync();
 

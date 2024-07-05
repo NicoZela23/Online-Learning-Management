@@ -1,10 +1,5 @@
 ﻿using Online_Learning_Management.Application.Files.Validator;
 using Online_Learning_Management.Infrastructure.DTOs.File;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OLM_Tests.Validator.Files
 {
@@ -32,17 +27,14 @@ namespace OLM_Tests.Validator.Files
 
             Assert.False(result.IsValid);
 
-            // FileName validation
             var fileNameError = result.Errors.FirstOrDefault(e => e.PropertyName == nameof(dto.FileName));
             Assert.NotNull(fileNameError);
             Assert.Equal("FileName is required.", fileNameError.ErrorMessage);
 
-            // BlobURL validation
             var blobURLError = result.Errors.FirstOrDefault(e => e.PropertyName == nameof(dto.BlobURL));
             Assert.NotNull(blobURLError);
             Assert.Equal("BlobURL is required.", blobURLError.ErrorMessage);
 
-            // FileSize validation
             var fileSizeError = result.Errors.FirstOrDefault(e => e.PropertyName == nameof(dto.FileSize));
             Assert.NotNull(fileSizeError);
             Assert.Equal("FileSize must be greater than zero.", fileSizeError.ErrorMessage);

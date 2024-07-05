@@ -8,7 +8,6 @@ using Online_Learning_Management.Domain.Interfaces.Students;
 using Online_Learning_Management.Infrastructure.DTOs.Auth;
 using Online_Learning_Management.Infrastructure.DTOs.Instructor;
 using Online_Learning_Management.Infrastructure.DTOs.Student;
-using Online_Learning_Management.Infrastructure.Students;
 
 namespace Online_Learning_Management.Application.Auth.Services
 {

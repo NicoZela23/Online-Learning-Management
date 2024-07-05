@@ -3,11 +3,6 @@ using Online_Learning_Management.Domain.Entities.CourseStudent;
 using Online_Learning_Management.Domain.Entities.Students;
 using Online_Learning_Management.Infrastructure.Data;
 using Online_Learning_Management.Infrastructure.Repositories.CourseStudents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OLM_Tests.Repository.CourseStudents
 {
@@ -118,7 +113,7 @@ namespace OLM_Tests.Repository.CourseStudents
                 Id = courseId,
                 Title = "Test Course",
                 Description = "Test Description",
-                IdInstructor = 1,
+                IdInstructor = Guid.NewGuid(),
                 Content = new List<string> { "Introduction" },
                 DurationInWeeks = 5
             };
